@@ -1,0 +1,27 @@
+html {
+  --fgcolor: #424242;
+
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  background: #efe9da;
+  color: var(--fgcolor);
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --fgcolor: #f7f7f7;
+
+    background: #1b1e22;
+    color: var(--fgcolor)
+  }
+}
+
+body {
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  line-height: 1.1;
+  flex-direction: column;
+  align-items: center;
+}
