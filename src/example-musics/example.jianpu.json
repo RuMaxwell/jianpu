@@ -1,5 +1,5 @@
 {
-  "title": "天空之城（bB调单簧管）",
+  "title": "天空之城（♭B调单簧管）",
   "meta": {
     "keySignature": {
       "note": "B",
@@ -358,7 +358,7 @@
           "octave": 4,
           "accidental": "♯"
         },
-        "denominator": 4
+        "denominator": 8
       },
       {
         "key": "1745910438818-53",
@@ -496,14 +496,19 @@
         "denominator": 4
       },
       {
-        "key": "1745910610205-74",
-        "type": "dot"
-      },
-      {
         "key": "1745910616163-75",
         "pitch": {
           "note": "G",
           "octave": 4
+        },
+        "denominator": 8
+      },
+      {
+        "key": "1746014121678-75",
+        "pitch": {
+          "note": "F",
+          "octave": 4,
+          "accidental": "♯"
         },
         "denominator": 8
       },
@@ -736,7 +741,7 @@
           "octave": 4,
           "accidental": "♯"
         },
-        "denominator": 4
+        "denominator": 8
       },
       {
         "key": "1745910664697-111",
@@ -1027,13 +1032,17 @@
         "denominator": 4
       },
       {
-        "key": "1745910772292-155",
-        "type": "dot"
-      },
-      {
         "key": "1745910773629-156",
         "pitch": {
           "note": "G",
+          "octave": 4
+        },
+        "denominator": 8
+      },
+      {
+        "key": "1746014200491-156",
+        "pitch": {
+          "note": "A",
           "octave": 4
         },
         "denominator": 8
@@ -1172,13 +1181,17 @@
         "denominator": 4
       },
       {
-        "key": "1745910802335-178",
-        "type": "dot"
-      },
-      {
         "key": "1745910803245-179",
         "pitch": {
           "note": "G",
+          "octave": 4
+        },
+        "denominator": 8
+      },
+      {
+        "key": "1746014219226-179",
+        "pitch": {
+          "note": "A",
           "octave": 4
         },
         "denominator": 8
