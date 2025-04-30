@@ -1,19 +1,4 @@
-export enum Note {
-  C = 'C',
-  D = 'D',
-  E = 'E',
-  F = 'F',
-  G = 'G',
-  A = 'A',
-  B = 'B',
-  Do = 'C',
-  Re = 'D',
-  Mi = 'E',
-  Fa = 'F',
-  Sol = 'G',
-  La = 'A',
-  Si = 'B',
-}
+import type { Note } from '../music'
 
 export enum Accidental {
   Sharp = '♯',
@@ -24,10 +9,16 @@ export enum Accidental {
 export interface IKeySignature {
   note: Note
   accidental?: Accidental
-  scale?: 'major' | 'minor'
+  octave?: number
 }
 
 export interface ITimeSignature {
   numerator: number
   denominator: number
+}
+
+export interface IMusicMeta {
+  key?: IKeySignature
+  tempo?: ITimeSignature
+  composer?: string
 }

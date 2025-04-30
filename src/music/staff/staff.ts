@@ -1,4 +1,5 @@
-import { Accidental, Note } from '../meta/musicMeta'
+import type { Accidental } from '../meta/musicMeta'
+import type { Note } from '../music'
 
 export interface IStaff {
   notes: INote[]
@@ -10,10 +11,7 @@ export interface IKey {
 
 export type INote =
   | IPitchNote
-  | (IKey & {
-      type: 'rest'
-      denominator: number // 1 = whole note, 2 = half note, 4 = quarter note, etc.
-    })
+  | IRestNote
   | (IKey & {
       type: 'dot'
     })
@@ -33,6 +31,11 @@ export interface IPitch {
   note: Note
   accidental?: Accidental
   octave: number
+}
+
+export interface IRestNote extends IKey {
+  type: 'rest'
+  denominator: number // 1 = whole note, 2 = half note, 4 = quarter note, etc.
 }
 
 export interface IBar extends IKey {

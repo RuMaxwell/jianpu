@@ -1,19 +1,10 @@
 import { useState } from 'react'
 import type { IBar, INote, IPitchNote, ITextNote } from '../staff'
-import { Accidental, Note } from '../../meta/musicMeta'
+import { Accidental } from '../../meta/musicMeta'
+import { JIANPU_NOTE_TO_MUSIC_NOTE } from '../../music'
 
 const NOTE_KEY_SET = new Set(['0', '1', '2', '3', '4', '5', '6', '7'])
 const TEXT_KEY_SET = new Set([':'])
-
-const JIANPU_NOTE_TO_MUSIC_NOTE: Record<string, Note> = {
-  '1': Note.Do,
-  '2': Note.Re,
-  '3': Note.Mi,
-  '4': Note.Fa,
-  '5': Note.Sol,
-  '6': Note.La,
-  '7': Note.Si,
-}
 
 function genKey(cursor: number) {
   return `${Date.now()}-${cursor}`

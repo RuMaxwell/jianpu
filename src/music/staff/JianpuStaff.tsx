@@ -1,6 +1,7 @@
-import { Accidental, Note } from '../meta/musicMeta'
-import { MusicText } from '../MusicText'
 import type { INote, IPitchNote, IStaff } from './staff'
+import { MUSIC_NOTE_TO_JIANPU_NOTE } from '../music'
+import { Accidental } from '../meta/musicMeta'
+import { MusicText } from '../MusicText'
 import './JianpuStaff.css'
 import { em } from '../../styles/units'
 import { useStaffEditor } from './editor/engine'
@@ -98,16 +99,6 @@ function getNoteComponent(note: INote) {
   }
 }
 
-const NOTE_TO_JIANPU = {
-  [Note.Do]: '1',
-  [Note.Re]: '2',
-  [Note.Mi]: '3',
-  [Note.Fa]: '4',
-  [Note.Sol]: '5',
-  [Note.La]: '6',
-  [Note.Si]: '7',
-}
-
 function JianpuPitch(props: { note: IPitchNote }) {
   const { accidental, note, octave } = props.note.pitch
   const { denominator } = props.note
@@ -142,7 +133,7 @@ function JianpuPitch(props: { note: IPitchNote }) {
             {accidental && <sup>{accidental}</sup>}
           </MusicText>
           <MusicText className='jianpu-pitch-note-pitch-note-name'>
-            {NOTE_TO_JIANPU[note]}
+            {MUSIC_NOTE_TO_JIANPU_NOTE[note]}
           </MusicText>
         </div>
         {denominator > 4 &&

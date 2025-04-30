@@ -2,6 +2,30 @@
 
 A simple WYSIWYG *jianpu* editor, currently just an experimental project.
 
+You can get beautified *jianpu* score result by inputing notes in an intrusive way:
+
+- `1` inputs a *Do* quarter note
+- `2/` inputs a *Re* eighth note
+- `5#.` inputs a *Sol-sharp* quarter note with a dot
+- `6---` inputs a *La* whole note
+- `0` inputs a quarter rest
+- `|` inputs a bar line
+- ...
+
+By typing these character sequences, the result *jianpu* displays instantly:
+
+![Example 0](docs/images/readme_example_0.jpg)
+
+There is a blinking cursor telling you where your next note will be inserted. You can navigate it to any place where new notes should be inserted, and you can delete a note simply by pressing <kbd>Delete</kbd> or <kbd>Backspace</kbd> just like editing text.
+
+> The purpose of this editor is to give few restriction instead of strictly following the *jianpu* standard. You can freely write music components even if they do not make sense. In current version, there are restrictions that `.` and `-` can only appears after `0`-`7`, and accidentals like `#`, `b`, `n`, or octave shifts like `l`, `h` can only appears after `1`-`7`. However, I consider to remove these restrictions in the future to let you write departed accidentals and octave dots. After all, given that a `´` symbol can live without a letter below, why not the accidentals?
+
+It is worth noting that these input sequences can be directly written to a file format called [`Jianpu Markdown`](./docs/jianpu-markdown/Jianpu%20Markdown%20Tutorial.md) and being displayed again by feeding the file to the editor. That is why the input format is designed to be both easy to type and easy to read.
+
+[A sample Jianpu Markdown file](./src/example-musics/example.jianpumd) (if compiled, the output is identical to [the example JSON file](./src/example-musics/example.jianpu.json))
+
+More features are being developed! See [Roadmap](#roadmap) for more information.
+
 ## Setup
 
 Install the dependencies:
@@ -32,18 +56,19 @@ pnpm preview
 
 ## Roadmap
 
-- [x] Display music title, key and time signature, and the author
-- [ ] Display *jianpu* staff
-  - [x] Display pitch notes
-    - [x] Display octave dots
-    - [x] Display half duration lines
-    - [x] Display accidentals
-  - [x] Display rest notes
-  - [x] Display dots and dashes
-  - [x] Display bar lines
-  - [ ] Merge the half lines of consecutive 8/16/32...th notes
-  - [ ] Horizontally stretch and align to both ends, preventing wrap inside a bar.
 - [ ] WYSIWYG staff editor
+  - [x] Display music title, key and time signature, and the author
+  - [ ] Display *jianpu* staff
+    - [x] Display pitch notes
+      - [x] Display octave dots
+      - [x] Display half duration lines
+      - [x] Display accidentals
+      - [ ] Hide accidental if there is a former identical note within the bar
+    - [x] Display rest notes
+    - [x] Display dots and dashes
+    - [x] Display bar lines
+    - [ ] Merge the half lines of consecutive 8/16/32...th notes
+    - [ ] Horizontally stretch and align to both ends, preventing wrap inside a bar.
   - [ ] Edit music title, key and time signature, and the author
   - [ ] Edit *jianpu* staff
     - [ ] Navigation
@@ -61,6 +86,13 @@ pnpm preview
       - [x] Insert bar lines
       - [x] Delete notes
       - [ ] Attach slurs
+  - [ ] Intellisense
+    - [ ] Warn if a bar has less or more beats than those restricted by the time signature
+  - [ ] Import/Export
+    - [ ] Import music score from a Jianpu JSON file
+    - [ ] Import music score from a Jianpu Markdown file
+    - [ ] Export music score in Jianpu JSON format
+    - [ ] Export music score in Jianpu Markdown format
 
 ## Editor Usage
 

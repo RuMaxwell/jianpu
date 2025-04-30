@@ -1,11 +1,11 @@
 {
   "title": "天空之城（♭B调单簧管）",
   "meta": {
-    "keySignature": {
+    "key": {
       "note": "B",
       "accidental": "♭"
     },
-    "timeSignature": { "numerator": 4, "denominator": 4 },
+    "tempo": { "numerator": 4, "denominator": 4 },
     "composer": "作曲：久石让"
   },
   "staff": {
