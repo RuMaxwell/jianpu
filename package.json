@@ -3,6 +3,10 @@
   "version": "0.0.1-alpha",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "GitHub",
+    "url": "https://github.com/RuMaxwell/jianpu"
+  },
   "scripts": {
     "build": "rsbuild build",
     "dev": "rsbuild dev --open",
