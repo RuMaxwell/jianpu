@@ -1,5 +1,5 @@
 import { useSize } from 'ahooks'
-import { px } from '../styles/units'
+import { px } from '../utils/units'
 import MusicTitle from '../music/MusicTitle'
 import { MusicMeta } from '../music/meta'
 import { IKeySignature, ITimeSignature } from '../music/meta/musicMeta'

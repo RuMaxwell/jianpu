@@ -3,7 +3,7 @@ import { MUSIC_NOTE_TO_JIANPU_NOTE } from '../music'
 import { Accidental } from '../meta/musicMeta'
 import { MusicText } from '../MusicText'
 import './JianpuStaff.css'
-import { em } from '../../styles/units'
+import { em } from '../../utils/units'
 import { useStaffEditor } from './editor/engine'
 import { useEffect, useState } from 'react'
 
