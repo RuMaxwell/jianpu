@@ -5,13 +5,16 @@ import {
   type Note,
 } from '../music/music'
 import { Accidental, type ITimeSignature } from '../music/meta/musicMeta'
+import { Version } from '../utils/version'
 
 function checkVersion(version: string) {
   // PACKAGE_VERSION is defined by rsbuild.config.ts (in source.define) and
   // declared in env.d.ts. Its value is in package.json.
-  if (version !== PACKAGE_VERSION) {
+  const packageVersion = Version.fromString(PACKAGE_VERSION)
+  const markdownVersion = Version.fromString(version)
+  if (!packageVersion.compatibleTo(markdownVersion)) {
     console.warn(
-      `Version mismatch: expected ${PACKAGE_VERSION}, got ${version}`,
+      `Version mismatch: markdown file version ${markdownVersion} is not compatible to runtime version ${PACKAGE_VERSION}. Some unexpected errors may occur. See [changes](${PACKAGE_REPOSITORY}/docs/CHANGELOG.md).`,
     )
   }
 }
