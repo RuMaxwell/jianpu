@@ -1,11 +1,10 @@
-import type { IKey, INote, IPitch, IPitchNote } from '../music/staff/staff'
-import {
-  IMusicScore,
-  JIANPU_NOTE_TO_MUSIC_NOTE,
-  type Note,
-} from '../music/music'
-import { Accidental, type ITimeSignature } from '../music/meta/musicMeta'
+import type { INote, IPitch } from '../music/staff/staff'
+import { IMusicScore, type Note } from '../music/music'
+import { Accidental, type ITimeSignature } from '../music/meta/types'
 import { Version } from '../utils/version'
+import { MarkdownHtmlPropertyValue } from './ast'
+import { NotesStringParser } from './notesStringParser'
+import { HtmlParser } from './htmlParser'
 
 function checkVersion(version: string) {
   // PACKAGE_VERSION is defined by rsbuild.config.ts (in source.define) and
@@ -18,9 +17,6 @@ function checkVersion(version: string) {
     )
   }
 }
-
-const BUG_REPORT_MESSAGE =
-  'This is a bug in Jianpu Markdown parser, we would be grateful if you report it.'
 
 interface IProperty {
   type: 'main' | 'sub'
@@ -86,7 +82,6 @@ export class JianpuMarkdownParser {
         continue
       }
       const line = lines[i].trim()
-      console.log('line', line)
       switch (this.state.context) {
         case 'initial':
           i += this.handleInitialState(line)
@@ -119,6 +114,16 @@ export class JianpuMarkdownParser {
           this.state.context = 'initial'
           i++
       }
+    }
+
+    if (this.state.score.title) {
+      this.state.score.title =
+        this.parseHtml(this.state.score.title as string) ?? ''
+    }
+    if (this.state.score.meta.composer) {
+      this.state.score.meta.composer = this.parseHtml(
+        this.state.score.meta.composer as string,
+      )
     }
 
     if (this.state.notesString) {
@@ -326,179 +331,8 @@ export class JianpuMarkdownParser {
       octave: this.state.score.meta.key?.octave ?? 4,
     }).parse()
   }
-}
 
-class NotesStringParser {
-  private str: string
-  private i = 0
-  private notes: INote[] = []
-
-  constructor(notesString: string, private options: { octave: number }) {
-    this.str = notesString
-  }
-
-  public parse(): INote[] {
-    while (this.i < this.str.length) {
-      const char = this.str[this.i]
-      if (char.match(/\s/)) {
-        this.i++
-        continue
-      }
-      if (char.match(/[1-7]/)) {
-        this.pushPitchNote(JIANPU_NOTE_TO_MUSIC_NOTE[char])
-        this.i++
-        continue
-      }
-      if (char.match(/[\/#bnlh]/)) {
-        this.handlePitchModifier(char)
-        this.i++
-        continue
-      }
-      switch (char) {
-        case '0':
-          this.pushRestNote()
-          break
-        case '|':
-          this.handleBarLine()
-          break
-        case '.':
-          this.handleDot()
-          break
-        case '-':
-          this.handleDash()
-          break
-        case ':':
-          this.pushNote({ type: 'text', text: ':' } as INote)
-          break
-        default:
-          console.warn(`Unexpected character in notes: ${char}. Ignoring it.`)
-          break
-      }
-      this.i++
-    }
-    return this.notes
-  }
-
-  private handleBarLine(): void {
-    const prev = this.notes[this.notes.length - 1]
-    if (prev?.type === 'bar') {
-      prev.final = true
-      return
-    }
-    if (prev?.type === 'text' && prev.text === ':') {
-      this.notes[this.notes.length - 1] = {
-        key: prev.key,
-        type: 'bar',
-        repeat: true,
-      }
-      return
-    }
-    this.pushNote({ type: 'bar' })
-  }
-
-  private handleDot(): void {
-    const prev = this.notes[this.notes.length - 1]
-    if (!prev?.type || prev.type === 'dot' || prev.type === 'rest') {
-      this.pushNote({ type: 'dot' })
-    } else {
-      console.warn(`Unexpected '.' after ${prev.type}. Ignoring it.`)
-    }
-  }
-
-  private handleDash(): void {
-    const prev = this.notes[this.notes.length - 1]
-    if (!prev?.type || prev.type === 'dash' || prev.type === 'rest') {
-      this.pushNote({ type: 'dash' })
-    } else {
-      console.warn(`Unexpected '-' after ${prev.type}. Ignoring it.`)
-    }
-  }
-
-  private handlePitchModifier(modifier: string): void {
-    const compatibleWithRest = modifier === '/'
-    if (compatibleWithRest) {
-      return this.handlePitchRestModifier(modifier)
-    }
-    const prev = this.notes[this.notes.length - 1]
-    if (prev?.type !== undefined) {
-      console.warn(`Unexpected '${modifier}' after ${prev.type}. Ignoring it.`)
-      return
-    }
-    switch (modifier) {
-      case 'l':
-      case 'h':
-        this.notes[this.notes.length - 1] = {
-          ...prev,
-          pitch: {
-            ...prev.pitch,
-            octave: prev.pitch.octave + (modifier === 'h' ? 1 : -1),
-          },
-        } as IPitchNote
-        break
-      case '#':
-      case 'b':
-      case 'n':
-        this.notes[this.notes.length - 1] = {
-          ...prev,
-          pitch: {
-            ...prev.pitch,
-            accidental:
-              modifier === '#'
-                ? Accidental.Sharp
-                : modifier === 'b'
-                ? Accidental.Flat
-                : Accidental.Natural,
-          },
-        } as IPitchNote
-        break
-      default:
-        throw new Error(`Unreachable code. ${BUG_REPORT_MESSAGE}`)
-    }
-  }
-
-  private handlePitchRestModifier(modifier: string): void {
-    const prev = this.notes[this.notes.length - 1]
-    if (prev?.type !== undefined) {
-      console.warn(`Unexpected '${modifier}' after ${prev.type}. Ignoring it.`)
-      return
-    }
-    switch (modifier) {
-      case '/':
-        this.notes[this.notes.length - 1] = {
-          ...prev,
-          denominator: prev.denominator * 2,
-        }
-        break
-      default:
-        throw new Error(`Unreachable code. ${BUG_REPORT_MESSAGE}`)
-    }
-  }
-
-  private makeNote(noteWithoutKey: Omit<INote, 'key'> & Partial<IKey>): INote {
-    return {
-      ...(noteWithoutKey as INote),
-      key: `${this.notes.length}`,
-    }
-  }
-
-  private pushNote(noteWithoutKey: Omit<INote, 'key'> & Partial<IKey>): void {
-    this.notes.push(this.makeNote(noteWithoutKey))
-  }
-
-  private pushPitchNote(note: Note): void {
-    this.pushNote({
-      pitch: {
-        note,
-        octave: this.options.octave,
-      },
-      denominator: 4,
-    } as INote)
-  }
-
-  private pushRestNote(): void {
-    this.pushNote({
-      type: 'rest',
-      denominator: 4,
-    } as INote)
+  private parseHtml(html: string): MarkdownHtmlPropertyValue | undefined {
+    return new HtmlParser(html).parse()
   }
 }

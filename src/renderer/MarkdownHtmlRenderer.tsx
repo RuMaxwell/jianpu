@@ -1,16 +1,16 @@
 import { CSSProperties } from 'react'
-import type { HtmlNode } from '../jianpu-markdown/ast'
+import type { MarkdownHtmlPropertyValue } from '../jianpu-markdown/ast'
 
 export interface AllowedHtmlAttributes {
   style?: CSSProperties
   [p: string]: any // extra attributes are ignored
 }
 
-export default function HtmlNodeRenderer({
+export default function MarkdownHtmlRenderer({
   htmlNode,
   attrs,
 }: {
-  htmlNode: string | HtmlNode | HtmlNode[] | undefined
+  htmlNode: MarkdownHtmlPropertyValue | undefined
   attrs?: AllowedHtmlAttributes
 }): string | JSX.Element | undefined {
   if (htmlNode === undefined) {
@@ -20,7 +20,7 @@ export default function HtmlNodeRenderer({
     return (
       <>
         {htmlNode.map((node) => (
-          <HtmlNodeRenderer
+          <MarkdownHtmlRenderer
             key={node.id}
             htmlNode={node}
             attrs={{ attrs, ...node }}
@@ -33,12 +33,12 @@ export default function HtmlNodeRenderer({
     return attrs ? <span style={attrs?.style}>{htmlNode}</span> : htmlNode
   }
   if (!htmlNode.tag) {
-    if (typeof htmlNode.innerHtml === 'string') {
-      return htmlNode.innerHtml
+    if (typeof htmlNode.children === 'string') {
+      return htmlNode.children
     }
     return (
-      <HtmlNodeRenderer
-        htmlNode={htmlNode.innerHtml}
+      <MarkdownHtmlRenderer
+        htmlNode={htmlNode.children}
         attrs={{ attrs, ...htmlNode }}
       />
     )
@@ -46,14 +46,18 @@ export default function HtmlNodeRenderer({
   switch (htmlNode.tag) {
     case 'b':
     case 'code':
+    case 'div':
     case 'i':
+    case 'span':
     case 'strong':
     case 'sub':
     case 'sup':
       return (
         <htmlNode.tag style={attrs?.style}>
-          <HtmlNodeRenderer htmlNode={htmlNode.innerHtml} />
+          <MarkdownHtmlRenderer htmlNode={htmlNode.children} />
         </htmlNode.tag>
       )
+    case 'br':
+      return <br />
   }
 }

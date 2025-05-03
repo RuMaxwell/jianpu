@@ -1,5 +1,14 @@
 # Change log
 
+## Version 0.0.2-alpha
+
+### Features
+
++ Support custom HTML content in text properties (currently only `title`, `meta.composer`)
+
++ Jianpu Markdown
+  + Support parsing HTML script in `title` and `meta.composer` property values
+
 ## Version 0.0.1-alpha
 
 ### Features

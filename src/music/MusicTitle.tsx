@@ -1,15 +1,15 @@
-import { HtmlNode } from '../jianpu-markdown/ast'
-import HtmlNodeRenderer from '../renderer/HtmlNodeRenderer'
+import { MarkdownHtmlPropertyValue } from '../jianpu-markdown/ast'
+import MarkdownHtmlRenderer from '../renderer/MarkdownHtmlRenderer'
 import './MusicTitle.css'
 
 export default function MusicTitle({
   title,
 }: {
-  title?: string | HtmlNode | HtmlNode[]
+  title?: MarkdownHtmlPropertyValue
 }) {
   return (
     <h1 className='music-title'>
-      <HtmlNodeRenderer htmlNode={title} />
+      <MarkdownHtmlRenderer htmlNode={title} />
     </h1>
   )
 }

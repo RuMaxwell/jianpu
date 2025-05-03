@@ -58,6 +58,7 @@ pnpm preview
 
 - [ ] WYSIWYG staff editor
   - [x] Display music title, key and time signature, and the author
+    - [x] Display HTML content in music title and the author
   - [ ] Display *jianpu* staff
     - [x] Display pitch notes
       - [x] Display octave dots
@@ -93,6 +94,8 @@ pnpm preview
     - [ ] Import music score from a Jianpu Markdown file
     - [ ] Export music score in Jianpu JSON format
     - [ ] Export music score in Jianpu Markdown format
+- [x] Jianpu Markdown language
+  - [x] Parser (synchronized with editor features)
 
 ## Editor Usage
 

@@ -62,24 +62,42 @@ Let's move on to the `Staff` main property, which only has the `Notes` sub prope
  
 ## Syntax of the Predefined Values
 
-In Jianpu Markdown, whitespaces (except for line breaks) are ignored whenever removing it does not stick things together. This also applies to some predefined property values. Predefined properties like `version`, `title`, and `meta.composer` (the `composer` sub property of `meta` property) are plain text and whitespaces are preserved, while other properties ignore insignificant whitespaces. e.g. For `meta.key` property, both `B b` and `Bb` means the same; for `meta.tempo` property, both `4 / 4` and `4/4` means the same. What really determines this behavior is the parser used to parse the value. For `version` and `title` we use the plain text parser (no parser). For `meta.key` we use the `KeySignature` parser and for `meta.tempo` we use the `TimeSignature` parser. To remove the barrier, a table of the predefined properties with their parsers are provided below:
+In Jianpu Markdown, whitespaces (except for line breaks) are ignored whenever removing it does not stick things together. This also applies to some predefined property values. Predefined properties like `version` are plain text and whitespaces are preserved. Properties like `title` and `meta.composer` (the `composer` sub property of `meta` property) have HTML values so whitespaces follow the rule of the browser that renders the HTML. Other properties (currently) ignore insignificant whitespaces. e.g. For `meta.key` property, both `B b` and `Bb` means the same; for `meta.tempo` property, both `4 / 4` and `4/4` means the same.
+
+What really determines the behavior is the parser used to parse the value. For `version`, we use the plain text parser (no parser). For `title` and `meta.composer`, we use the `HTML` parser. For `meta.key`, we use the `KeySignature` parser. For `meta.tempo`, we use the `TimeSignature` parser. To remove the barrier, a table of the predefined properties with their parsers are provided below:
 
 | Property Name | Parser | Whitespace |
 | --- | --- | --- |
 | version | plain text | significant |
-| title | plain text | significant |
+| title | HTML | HTML |
 | meta.key | KeySignature | insignificant |
 | meta.tempo | TimeSignature | insignificant |
-| meta.composer | plain text | significant |
+| meta.composer | HTML | HTML |
 | staff.notes | StaffNotes | insignificant |
 
-> In the current version, `meta` and `staff` does not allow a direct value.
+> In the current version, `meta` and `staff` does not allow a direct value, so they are not on the list.
 
 > For people who also reads the source code of this project: the parser names listed above do not have to be the same with the names of the functions used to implement the parser.
 
-> Some (or all) of the properties using plain text parser now may use HTML parser in the future.
-
 Now let's dig into the syntax of the special parsers.
+
+### HTML parser
+
+Only a set of HTML tags and attributes are allowed and will affect the output. Those are:
+
+- Tags
+  - `b`
+  - `code`
+  - `div`
+  - `i`
+  - `span`
+  - `strong`
+  - `sub`
+  - `sup`
+- Tags that are not allowed to have children
+  - `br`
+- Attributes
+  - `style`
 
 ### KeySignature syntax for `meta.key` property
 

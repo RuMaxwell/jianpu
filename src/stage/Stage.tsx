@@ -1,4 +1,4 @@
-import type { HtmlNode } from '../jianpu-markdown/ast'
+import type { MarkdownHtmlPropertyValue } from '../jianpu-markdown/ast'
 import { useSize } from 'ahooks'
 import { px } from '../utils/units'
 import MusicTitle from '../music/MusicTitle'
@@ -8,10 +8,10 @@ import { IStaff } from '../music/staff/staff'
 import JianpuStaff from '../music/staff/JianpuStaff'
 
 export default function Stage(props: {
-  title?: string | HtmlNode | HtmlNode[]
+  title?: MarkdownHtmlPropertyValue
   keySignature?: IKeySignature
   timeSignature?: ITimeSignature
-  composer?: string | HtmlNode | HtmlNode[]
+  composer?: MarkdownHtmlPropertyValue
   staff?: IStaff
 }) {
   const { title, keySignature, timeSignature, composer, staff } = props
