@@ -1,11 +1,28 @@
 {
-  "title": "天空之城（♭B调单簧管）",
+  "title": [
+    {
+      "id": "0",
+      "innerHtml": "天空之城（"
+    },
+    {
+      "id": "1",
+      "tag": "sup",
+      "innerHtml": "♭"
+    },
+    {
+      "id": "2",
+      "innerHtml": "B调单簧管）"
+    }
+  ],
   "meta": {
     "key": {
       "note": "B",
       "accidental": "♭"
     },
-    "tempo": { "numerator": 4, "denominator": 4 },
+    "tempo": {
+      "numerator": 4,
+      "denominator": 4
+    },
     "composer": "作曲：久石让"
   },
   "staff": {

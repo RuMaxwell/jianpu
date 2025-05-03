@@ -1,14 +1,14 @@
+import type { HtmlNode } from '../jianpu-markdown/ast'
 import { useSize } from 'ahooks'
 import { px } from '../utils/units'
 import MusicTitle from '../music/MusicTitle'
 import { MusicMeta } from '../music/meta'
 import { IKeySignature, ITimeSignature } from '../music/meta/musicMeta'
-import { ReactNode } from 'react'
 import { IStaff } from '../music/staff/staff'
 import JianpuStaff from '../music/staff/JianpuStaff'
 
 export default function Stage(props: {
-  title?: string | ReactNode
+  title?: string | HtmlNode | HtmlNode[]
   keySignature?: IKeySignature
   timeSignature?: ITimeSignature
   composer?: string
@@ -22,7 +22,7 @@ export default function Stage(props: {
   return (
     title && (
       <div style={{ width: px(width) }}>
-        <MusicTitle>{title}</MusicTitle>
+        <MusicTitle title={title}></MusicTitle>
         <MusicMeta
           keySignature={keySignature}
           timeSignature={timeSignature}

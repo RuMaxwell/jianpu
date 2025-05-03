@@ -1,8 +1,9 @@
+import type { HtmlNode } from '../jianpu-markdown/ast'
 import { IMusicMeta } from './meta/musicMeta'
 import { IStaff } from './staff/staff'
 
 export interface IMusicScore {
-  title: string
+  title: string | HtmlNode | HtmlNode[]
   meta: IMusicMeta
   staff: IStaff
 }
