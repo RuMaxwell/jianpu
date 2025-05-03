@@ -1,4 +1,4 @@
-import type { Accidental } from '../meta/musicMeta'
+import type { Accidental } from '../meta/types'
 import type { Note } from '../music'
 
 export interface IStaff {

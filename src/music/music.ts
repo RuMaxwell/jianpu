@@ -1,5 +1,5 @@
 import type { HtmlNode } from '../jianpu-markdown/ast'
-import { IMusicMeta } from './meta/musicMeta'
+import { IMusicMeta } from './meta/types'
 import { IStaff } from './staff/staff'
 
 export interface IMusicScore {

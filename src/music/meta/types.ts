@@ -1,3 +1,4 @@
+import { HtmlNode } from '../../jianpu-markdown/ast'
 import type { Note } from '../music'
 
 export enum Accidental {
@@ -20,5 +21,5 @@ export interface ITimeSignature {
 export interface IMusicMeta {
   key?: IKeySignature
   tempo?: ITimeSignature
-  composer?: string
+  composer?: string | HtmlNode | HtmlNode[]
 }

@@ -1,12 +1,14 @@
-import type { IKeySignature, ITimeSignature } from './musicMeta'
+import type { IKeySignature, ITimeSignature } from './types'
 import KeySignature from './KeySignature'
 import TimeSignature from './TimeSignature'
 import './MusicMeta.css'
+import { HtmlNode } from '../../jianpu-markdown/ast'
+import HtmlNodeRenderer from '../../renderer/HtmlNodeRenderer'
 
-export function MusicMeta(props: {
+export default function MusicMeta(props: {
   keySignature?: IKeySignature
   timeSignature?: ITimeSignature
-  composer?: string
+  composer?: string | HtmlNode | HtmlNode[]
 }) {
   return (
     <div className='music-meta'>
@@ -18,7 +20,13 @@ export function MusicMeta(props: {
           <TimeSignature value={props.timeSignature}></TimeSignature>
         )}
       </div>
-      <div>{props.composer && <div>{props.composer}</div>}</div>
+      <div>
+        {props.composer && (
+          <div>
+            <HtmlNodeRenderer htmlNode={props.composer} />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

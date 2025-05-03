@@ -1,6 +1,6 @@
 import type { INote, IPitchNote, IStaff } from './staff'
 import { MUSIC_NOTE_TO_JIANPU_NOTE } from '../music'
-import { Accidental } from '../meta/musicMeta'
+import { Accidental } from '../meta/types'
 import { MusicText } from '../MusicText'
 import './JianpuStaff.css'
 import { em } from '../../utils/units'

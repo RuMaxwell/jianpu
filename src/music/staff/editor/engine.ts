@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { IBar, INote, IPitchNote, ITextNote } from '../staff'
-import { Accidental } from '../../meta/musicMeta'
+import { Accidental } from '../../meta/types'
 import { JIANPU_NOTE_TO_MUSIC_NOTE } from '../../music'
 
 const NOTE_KEY_SET = new Set(['0', '1', '2', '3', '4', '5', '6', '7'])
