@@ -7,6 +7,9 @@ import Stage from './stage/Stage'
 import Menu from './menu/Menu'
 import _exampleMusic from './example-musics/example.jianpu.json'
 import { JianpuMarkdownParser } from './jianpu-markdown/parser'
+import { createAndDownloadFile } from './utils/download'
+import { HtmlParser } from './jianpu-markdown/htmlParser'
+import { jianpuJsonObjectToMarkdown } from './jianpu-markdown/jsonToMarkdown'
 
 const App = () => {
   const [music, setMusic] = useState<IMusicScore>(_exampleMusic as IMusicScore)
@@ -32,6 +35,24 @@ const App = () => {
     console.error(errorMessage)
   }
 
+  function handleExportRequest(format: 'markdown' | 'json') {
+    const titleText = music.title
+      ? new HtmlParser(music.title).parseToDom().textContent
+      : `music-${Date.now()}`
+    if (format === 'json') {
+      const json = JSON.stringify(music)
+      createAndDownloadFile(
+        json,
+        'application/json',
+        `${titleText}.jianpu.json`,
+      )
+    } else {
+      // format === markdown
+      const markdown = jianpuJsonObjectToMarkdown(music)
+      createAndDownloadFile(markdown, 'text/plain', `${titleText}.jianpumd`)
+    }
+  }
+
   function handleTitleChange(value: string) {
     setMusic({
       ...music,
@@ -54,6 +75,7 @@ const App = () => {
       <Menu
         onFileImported={handleFileImported}
         onFileImportError={handleFileImportError}
+        onExportRequest={handleExportRequest}
       />
 
       <Stage

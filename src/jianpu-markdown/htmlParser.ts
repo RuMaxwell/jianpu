@@ -16,6 +16,12 @@ export class HtmlParser {
     return this.docToHtmlNode(doc)
   }
 
+  parseToDom(): HTMLElement {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(this.html, 'text/html')
+    return doc.body
+  }
+
   docToHtmlNode(doc: Document): MarkdownHtmlPropertyValue | undefined {
     return this.vanillaNodeListToHtmlNode(doc.body.childNodes)
   }

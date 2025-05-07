@@ -6,6 +6,12 @@ export enum Accidental {
   Natural = '♮',
 }
 
+export const ACCIDENTAL_TO_ASCII = {
+  [Accidental.Sharp]: '#',
+  [Accidental.Flat]: 'b',
+  [Accidental.Natural]: 'n',
+}
+
 export interface IKeySignature {
   note: Note
   accidental?: Accidental

@@ -6,9 +6,11 @@ import { useClickAway } from 'ahooks'
 export default function Menu({
   onFileImported,
   onFileImportError,
+  onExportRequest,
 }: {
   onFileImported?: (fileType: 'markdown' | 'json', content: string) => void
   onFileImportError?: (errorMessage: string) => void
+  onExportRequest?: (format: 'markdown' | 'json') => void
 }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
@@ -25,8 +27,10 @@ export default function Menu({
         jsonFileInputRef.current?.click()
         break
       case MenuAction.ExportMarkdown:
+        onExportRequest?.('markdown')
         break
       case MenuAction.ExportJson:
+        onExportRequest?.('json')
         break
     }
 

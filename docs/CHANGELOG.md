@@ -1,5 +1,16 @@
 # Change log
 
+## Version 0.0.3-alpha
+
+### Features
+
++ Now you can edit title and composer in the editor (in HTML)
+
++ Import music from Jianpu Markdown file
++ Import music from Jianpu JSON file
++ Export music as Jianpu Markdown file
++ Export music as Jianpu JSON file
+
 ## Version 0.0.2-alpha
 
 ### Features

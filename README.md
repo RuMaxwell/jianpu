@@ -89,11 +89,11 @@ pnpm preview
       - [ ] Attach slurs
   - [ ] Intellisense
     - [ ] Warn if a bar has less or more beats than those restricted by the time signature
-  - [ ] Import/Export
+  - [x] Import/Export
     - [x] Import music score from a Jianpu JSON file
     - [x] Import music score from a Jianpu Markdown file
-    - [ ] Export music score in Jianpu JSON format
-    - [ ] Export music score in Jianpu Markdown format
+    - [x] Export music score as Jianpu JSON format
+    - [x] Export music score as Jianpu Markdown format
 - [x] Jianpu Markdown language
   - [x] Parser (synchronized with editor features)
 
