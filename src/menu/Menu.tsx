@@ -7,10 +7,14 @@ export default function Menu({
   onFileImported,
   onFileImportError,
   onExportRequest,
+  onAddTitle,
+  onAddComposer,
 }: {
   onFileImported?: (fileType: 'markdown' | 'json', content: string) => void
   onFileImportError?: (errorMessage: string) => void
   onExportRequest?: (format: 'markdown' | 'json') => void
+  onAddTitle?: () => void
+  onAddComposer?: () => void
 }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
@@ -81,6 +85,8 @@ export default function Menu({
         ref={menuButtonRef}
         isActive={menuIsOpen}
         onClick={handleMenuButtonClick}
+        onAddTitle={onAddTitle}
+        onAddComposer={onAddComposer}
       />
       <MenuPanel
         ref={menuPanelRef}

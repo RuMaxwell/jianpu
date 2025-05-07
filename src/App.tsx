@@ -1,4 +1,3 @@
-import type { IStaff } from './music/staff/staff'
 import type { IMusicScore } from './music/music'
 
 import { useState } from 'react'
@@ -53,6 +52,29 @@ const App = () => {
     }
   }
 
+  function handleAddTitle() {
+    if (music.title) {
+      return
+    }
+    setMusic({
+      ...music,
+      title: 'Edit Title',
+    })
+  }
+
+  function handleAddComposer() {
+    if (music.meta?.composer) {
+      return
+    }
+    setMusic({
+      ...music,
+      meta: {
+        ...music.meta,
+        composer: 'Composer: Edit Composer',
+      },
+    })
+  }
+
   function handleTitleChange(value: string) {
     setMusic({
       ...music,
@@ -76,6 +98,8 @@ const App = () => {
         onFileImported={handleFileImported}
         onFileImportError={handleFileImportError}
         onExportRequest={handleExportRequest}
+        onAddTitle={handleAddTitle}
+        onAddComposer={handleAddComposer}
       />
 
       <Stage
@@ -83,7 +107,7 @@ const App = () => {
         keySignature={music.meta.key}
         timeSignature={music.meta.tempo}
         composerHtml={music.meta.composer}
-        staff={music.staff as IStaff}
+        staff={music.staff}
         onTitleChange={handleTitleChange}
         onComposerChange={handleComposerChange}
       />

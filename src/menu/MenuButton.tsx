@@ -10,8 +10,10 @@ const MenuButton = forwardRef<
   {
     isActive?: boolean
     onClick?: (active: boolean) => void
+    onAddTitle?: () => void
+    onAddComposer?: () => void
   }
->(({ isActive, onClick }, ref) => {
+>(({ isActive, onClick, onAddTitle, onAddComposer }, ref) => {
   const [autoHide, setAutoHide] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
 
@@ -65,6 +67,12 @@ const MenuButton = forwardRef<
         </button>
         <button className='menu-button' onClick={handleMenuClick}>
           <img className='icon' src={isActive ? CloseIcon : MenuIcon}></img>
+        </button>
+        <button className='menu-text-button' onClick={onAddTitle}>
+          +Title
+        </button>
+        <button className='menu-text-button' onClick={onAddComposer}>
+          +Composer
         </button>
       </div>
     </div>

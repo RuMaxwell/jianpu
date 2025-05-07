@@ -11,6 +11,8 @@
   left: 0;
   top: 0;
   width: 100%;
+  display: flex;
+  align-items: center;
   background-color: var(--bg-color);
   transition: top 0.2s ease-in-out;
 }
@@ -23,22 +25,32 @@
   top: -2rem;
 }
 
-.menu-button {
+.menu-button,
+.menu-text-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 2rem;
   height: 2rem;
   padding: 0.3em;
-  font-size: 1.4rem;
+  font-size: 1rem;
   border: none;
   background-color: var(--bg-color);
   cursor: pointer;
   transition: filter 0.2s ease-in-out;
 }
 
-.menu-button:hover {
+.menu-button {
+  width: 2rem;
+  font-size: 1.4rem;
+}
+
+.menu-text-button {
+  font-family: monospace;
+}
+
+.menu-button:hover,
+.menu-text-button:hover {
   filter: invert(1);
 }
 
