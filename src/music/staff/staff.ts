@@ -5,23 +5,23 @@ export interface IStaff {
   notes: INote[]
 }
 
-export interface IKey {
-  key: string
+export interface INoteId {
+  id: string
 }
 
 export type INote =
   | IPitchNote
   | IRestNote
-  | (IKey & {
+  | (INoteId & {
       type: 'dot'
     })
-  | (IKey & {
+  | (INoteId & {
       type: 'dash'
     })
   | IBar
   | ITextNote
 
-export interface IPitchNote extends IKey {
+export interface IPitchNote extends INoteId {
   type?: undefined
   pitch: IPitch
   denominator: number // 1 = whole note, 2 = half note, 4 = quarter note, etc.
@@ -33,18 +33,18 @@ export interface IPitch {
   octave: number
 }
 
-export interface IRestNote extends IKey {
+export interface IRestNote extends INoteId {
   type: 'rest'
   denominator: number // 1 = whole note, 2 = half note, 4 = quarter note, etc.
 }
 
-export interface IBar extends IKey {
+export interface IBar extends INoteId {
   type: 'bar'
   final?: boolean
   repeat?: boolean
 }
 
-export interface ITextNote extends IKey {
+export interface ITextNote extends INoteId {
   type: 'text'
   text: string
 }

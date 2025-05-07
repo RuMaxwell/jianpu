@@ -1,6 +1,6 @@
 import { Accidental } from '../music/meta/types'
 import { JIANPU_NOTE_TO_MUSIC_NOTE, Note } from '../music/music'
-import type { IKey, INote, IPitchNote } from '../music/staff/staff'
+import type { INoteId, INote, IPitchNote } from '../music/staff/staff'
 import { BUG_REPORT_MESSAGE } from './errors'
 
 export class NotesStringParser {
@@ -62,7 +62,7 @@ export class NotesStringParser {
     }
     if (prev?.type === 'text' && prev.text === ':') {
       this.notes[this.notes.length - 1] = {
-        key: prev.key,
+        id: prev.id,
         type: 'bar',
         repeat: true,
       }
@@ -149,15 +149,15 @@ export class NotesStringParser {
     }
   }
 
-  private makeNote(noteWithoutKey: Omit<INote, 'key'> & Partial<IKey>): INote {
+  private makeNote(noteWithoutId: Omit<INote, 'id'> & Partial<INoteId>): INote {
     return {
-      ...(noteWithoutKey as INote),
-      key: `${this.notes.length}`,
+      ...(noteWithoutId as INote),
+      id: `${this.notes.length}`,
     }
   }
 
-  private pushNote(noteWithoutKey: Omit<INote, 'key'> & Partial<IKey>): void {
-    this.notes.push(this.makeNote(noteWithoutKey))
+  private pushNote(noteWithoutId: Omit<INote, 'id'> & Partial<INoteId>): void {
+    this.notes.push(this.makeNote(noteWithoutId))
   }
 
   private pushPitchNote(note: Note): void {

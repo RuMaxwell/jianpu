@@ -6,7 +6,7 @@ import { JIANPU_NOTE_TO_MUSIC_NOTE } from '../../music'
 const NOTE_KEY_SET = new Set(['0', '1', '2', '3', '4', '5', '6', '7'])
 const TEXT_KEY_SET = new Set([':'])
 
-function genKey(cursor: number) {
+function genId(cursor: number) {
   return `${Date.now()}-${cursor}`
 }
 
@@ -38,7 +38,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
     setNotes((prev) => {
       const newNotes = [...prev]
       newNotes.splice(cursor, 0, {
-        key: genKey(cursor),
+        id: genId(cursor),
         type: 'text',
         text: ' ',
       })
@@ -64,7 +64,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
       setNotes((prev) => {
         const newNotes = [...prev]
         newNotes[cursor - 1] = {
-          key: newNotes[cursor - 1].key,
+          id: newNotes[cursor - 1].id,
           type: 'bar',
           final: false,
           repeat: true,
@@ -75,7 +75,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
       setNotes((prev) => {
         const newNotes = [...prev]
         newNotes.splice(cursor, 0, {
-          key: genKey(cursor),
+          id: genId(cursor),
           type: 'bar',
         })
         return newNotes
@@ -147,7 +147,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
       setNotes((prev) => {
         const newNotes = [...prev]
         newNotes.splice(cursor, 0, {
-          key: genKey(cursor),
+          id: genId(cursor),
           type: 'dot',
         })
         return newNotes
@@ -166,7 +166,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
       setNotes((prev) => {
         const newNotes = [...prev]
         newNotes.splice(cursor, 0, {
-          key: genKey(cursor),
+          id: genId(cursor),
           type: 'dash',
         })
         return newNotes
@@ -179,7 +179,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
     setNotes((prev) => {
       const newNotes = [...prev]
       newNotes.splice(cursor, 0, {
-        key: genKey(cursor),
+        id: genId(cursor),
         type: 'rest',
         denominator: 4,
       })
@@ -194,7 +194,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
     setNotes((prev) => {
       const newNotes = [...prev]
       newNotes.splice(cursor, 0, {
-        key: genKey(cursor),
+        id: genId(cursor),
         pitch: { note, octave: 4 },
         denominator: 4,
       })
@@ -207,7 +207,7 @@ export function useStaffEditor(initialNotes?: INote[]) {
     setNotes((prev) => {
       const newNotes = [...prev]
       newNotes.splice(cursor, 0, {
-        key: genKey(cursor),
+        id: genId(cursor),
         type: 'text',
         text: key,
       })
