@@ -90,8 +90,8 @@ pnpm preview
   - [ ] Intellisense
     - [ ] Warn if a bar has less or more beats than those restricted by the time signature
   - [ ] Import/Export
-    - [ ] Import music score from a Jianpu JSON file
-    - [ ] Import music score from a Jianpu Markdown file
+    - [x] Import music score from a Jianpu JSON file
+    - [x] Import music score from a Jianpu Markdown file
     - [ ] Export music score in Jianpu JSON format
     - [ ] Export music score in Jianpu Markdown format
 - [x] Jianpu Markdown language

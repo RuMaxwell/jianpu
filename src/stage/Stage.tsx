@@ -29,17 +29,15 @@ export default function Stage(props: {
   const width = windowSize?.width || 0
 
   return (
-    titleHtml && (
-      <div style={{ width: px(width) }}>
-        <MusicTitle titleHtml={titleHtml} onChange={onTitleChange}></MusicTitle>
-        <MusicMeta
-          keySignature={keySignature}
-          timeSignature={timeSignature}
-          composerHtml={composerHtml}
-          onComposerChange={onComposerChange}
-        ></MusicMeta>
-        {staff && <JianpuStaff staff={staff}></JianpuStaff>}
-      </div>
-    )
+    <div style={{ width: px(width) }}>
+      <MusicTitle titleHtml={titleHtml} onChange={onTitleChange}></MusicTitle>
+      <MusicMeta
+        keySignature={keySignature}
+        timeSignature={timeSignature}
+        composerHtml={composerHtml}
+        onComposerChange={onComposerChange}
+      ></MusicMeta>
+      {staff && <JianpuStaff staff={staff}></JianpuStaff>}
+    </div>
   )
 }

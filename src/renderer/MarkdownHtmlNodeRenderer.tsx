@@ -16,7 +16,7 @@ export default function MarkdownHtmlNodeRenderer({
   onClick?: () => void
 }): string | JSX.Element | undefined {
   if (htmlNode === undefined) {
-    return
+    return <></>
   }
   if (Array.isArray(htmlNode)) {
     return (

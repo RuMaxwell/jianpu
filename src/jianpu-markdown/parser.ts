@@ -69,6 +69,9 @@ export class JianpuMarkdownParser {
   private state: ReturnType<typeof JianpuMarkdownParser.getInitialState> =
     null as any
 
+  /** The parse does not fail (more strictly, it only fails when fatal error
+   * happens). Jianpu Markdown has a loose syntax that all kinds of text is
+   * valid. However, it prints warnings if there is content not making sense. */
   public parse(input: string): IMusicScore {
     this.state = JianpuMarkdownParser.getInitialState()
 

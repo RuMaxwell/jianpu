@@ -1,17 +1,19 @@
 html {
-  --fgcolor: #424242;
+  --fg-color: #424242;
+  --bg-color: #efe9da;
 
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  background: #efe9da;
-  color: var(--fgcolor);
+  color: var(--fg-color);
+  background: var(--bg-color);
 }
 
 @media (prefers-color-scheme: dark) {
   html {
-    --fgcolor: #f7f7f7;
+    --fg-color: #f7f7f7;
+    --bg-color: #424242;
 
-    background: #1b1e22;
-    color: var(--fgcolor)
+    color: var(--fg-color);
+    background: var(--bg-color);
   }
 }
 

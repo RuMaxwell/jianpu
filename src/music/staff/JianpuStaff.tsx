@@ -10,20 +10,23 @@ import { useEffect, useState } from 'react'
 export default function JianpuStaff({ staff }: { staff: IStaff }) {
   const { notes: initialNotes } = staff
 
-  const { notes, cursor, handleKey } = useStaffEditor(initialNotes)
+  const { notes, setNotes, cursor, setCursor, handleKey } =
+    useStaffEditor(initialNotes)
+
+  useEffect(() => {
+    setNotes(initialNotes)
+    setCursor(initialNotes.length)
+  }, [initialNotes])
 
   const [focused, setFocused] = useState(false)
   function handleFocus() {
-    console.log('focus')
     setFocused(true)
   }
   function handleBlur() {
-    console.log('blur')
     setFocused(false)
   }
 
   function handleInput(event: React.KeyboardEvent<HTMLDivElement>) {
-    // const target = event.target as HTMLDivElement
     console.log(event.key)
     if (handleKey(event.key)) {
       event.preventDefault()
@@ -32,7 +35,7 @@ export default function JianpuStaff({ staff }: { staff: IStaff }) {
   }
 
   useEffect(() => {
-    console.log('notes:after', notes)
+    console.log('notes:change', notes)
   }, [notes])
 
   return (

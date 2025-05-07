@@ -16,7 +16,7 @@
   width: 0.1em;
   top: 0.5em;
   height: 2em;
-  background-color: var(--fgcolor);
+  background-color: var(--fg-color);
   animation: blink 1s infinite;
   margin-left: -0.4em;
 }
@@ -90,7 +90,7 @@
   left: -0.15em;
   width: 0.8em;
   height: 0.1em;
-  background-color: var(--fgcolor);
+  background-color: var(--fg-color);
 }
 
 .jianpu-pitch-note-pitch-halfline.has-accidental {
@@ -110,7 +110,7 @@
   left: 0.3em;
   width: 0.05em;
   height: 1.5em;
-  background-color: var(--fgcolor);
+  background-color: var(--fg-color);
 }
 
 .jianpu-bar.repeat::before {
@@ -128,7 +128,7 @@
   left: 0.2rem;
   width: 0.15em;
   height: 1.5em;
-  background-color: var(--fgcolor);
+  background-color: var(--fg-color);
 }
 
 .jianpu-dot {

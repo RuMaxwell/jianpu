@@ -1,0 +1,31 @@
+ul.menu-panel {
+  position: fixed;
+  z-index: 1;
+  left: 2rem;
+  top: 2rem;
+  border: 2px solid black;
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  box-shadow: 3px 3px 0 0 black;
+}
+
+li.menu-item {
+  display: flex;
+  font-size: 0.8rem;
+  line-height: 2rem;
+  padding: 0 0.6rem;
+  cursor: pointer;
+  background-color: var(--bg-color);
+  transition: filter 0.1s ease-in-out;
+}
+
+li.menu-item:hover {
+  filter: invert(1);
+}
+
+@media (prefers-dark-scheme: dark) {
+  .menu {
+    border: 2px solid white;
+  }
+}
