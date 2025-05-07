@@ -1,9 +1,8 @@
-import type { MarkdownHtmlPropertyValue } from '../jianpu-markdown/ast'
 import { IMusicMeta } from './meta/types'
 import { IStaff } from './staff/staff'
 
 export interface IMusicScore {
-  title: MarkdownHtmlPropertyValue
+  title: string // HTML
   meta: IMusicMeta
   staff: IStaff
 }

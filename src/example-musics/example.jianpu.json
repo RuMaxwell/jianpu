@@ -1,27 +1,5 @@
 {
-  "title": [
-    {
-      "id": "0",
-      "children": "天空之城"
-    },
-    {
-      "id": "1",
-      "tag": "br"
-    },
-    {
-      "id": "2",
-      "children": "（"
-    },
-    {
-      "id": "3",
-      "tag": "sup",
-      "children": "♭"
-    },
-    {
-      "id": "4",
-      "children": "B调单簧管）"
-    }
-  ],
+  "title": "天空之城<br><span style=\"color: grey\">（<sup>♭</sup>B调单簧管）</span>",
   "meta": {
     "key": {
       "note": "B",

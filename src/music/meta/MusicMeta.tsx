@@ -2,28 +2,29 @@ import type { IKeySignature, ITimeSignature } from './types'
 import KeySignature from './KeySignature'
 import TimeSignature from './TimeSignature'
 import './MusicMeta.css'
-import { MarkdownHtmlPropertyValue } from '../../jianpu-markdown/ast'
-import MarkdownHtmlRenderer from '../../renderer/MarkdownHtmlRenderer'
+import MarkdownHtmlEditorRenderer from '../../renderer/MarkdownHtmlEditorRenderer'
 
 export default function MusicMeta(props: {
   keySignature?: IKeySignature
   timeSignature?: ITimeSignature
-  composer?: MarkdownHtmlPropertyValue
+  composerHtml?: string
+  onComposerChange?: (value: string) => void
 }) {
+  const { keySignature, timeSignature, composerHtml, onComposerChange } = props
+
   return (
     <div className='music-meta'>
       <div>
-        {props.keySignature && (
-          <KeySignature value={props.keySignature}></KeySignature>
-        )}
-        {props.timeSignature && (
-          <TimeSignature value={props.timeSignature}></TimeSignature>
-        )}
+        {keySignature && <KeySignature value={keySignature}></KeySignature>}
+        {timeSignature && <TimeSignature value={timeSignature}></TimeSignature>}
       </div>
       <div>
-        {props.composer && (
+        {composerHtml && (
           <div>
-            <MarkdownHtmlRenderer htmlNode={props.composer} />
+            <MarkdownHtmlEditorRenderer
+              html={composerHtml}
+              onChange={onComposerChange}
+            />
           </div>
         )}
       </div>

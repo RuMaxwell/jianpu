@@ -2,9 +2,7 @@ import type { INote, IPitch } from '../music/staff/staff'
 import { IMusicScore, type Note } from '../music/music'
 import { Accidental, type ITimeSignature } from '../music/meta/types'
 import { Version } from '../utils/version'
-import { MarkdownHtmlPropertyValue } from './ast'
 import { NotesStringParser } from './notesStringParser'
-import { HtmlParser } from './htmlParser'
 
 function checkVersion(version: string) {
   // PACKAGE_VERSION is defined by rsbuild.config.ts (in source.define) and
@@ -114,16 +112,6 @@ export class JianpuMarkdownParser {
           this.state.context = 'initial'
           i++
       }
-    }
-
-    if (this.state.score.title) {
-      this.state.score.title =
-        this.parseHtml(this.state.score.title as string) ?? ''
-    }
-    if (this.state.score.meta.composer) {
-      this.state.score.meta.composer = this.parseHtml(
-        this.state.score.meta.composer as string,
-      )
     }
 
     if (this.state.notesString) {
@@ -330,9 +318,5 @@ export class JianpuMarkdownParser {
     return new NotesStringParser(this.state.notesString, {
       octave: this.state.score.meta.key?.octave ?? 4,
     }).parse()
-  }
-
-  private parseHtml(html: string): MarkdownHtmlPropertyValue | undefined {
-    return new HtmlParser(html).parse()
   }
 }
