@@ -8,6 +8,7 @@ import {
 } from 'react'
 import './MarkdownHtmlEditorRenderer.css'
 import MarkdownHtmlRenderer from '../renderer/MarkdownHtmlRenderer'
+import { useMemoizedFn } from 'ahooks'
 
 export default function MarkdownHtmlEditorRenderer({
   html,
@@ -28,24 +29,28 @@ export default function MarkdownHtmlEditorRenderer({
     editorRef.current?.focus()
   }, [isEditing])
 
-  function enterEditingMode() {
+  const enterEditingMode = useMemoizedFn(() => {
     setIsEditing(true)
-  }
+  })
 
-  function exitEditingMode() {
+  const exitEditingMode = useMemoizedFn(() => {
     setIsEditing(false)
-  }
+  })
 
-  function handleEditorChange(e: ChangeEvent<HTMLTextAreaElement>) {
-    return onChange?.(e.target.value)
-  }
+  const handleEditorChange = useMemoizedFn(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      return onChange?.(e.target.value)
+    },
+  )
 
-  function handleEditorKeyUp(e: KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === 'Escape') {
-      e.preventDefault()
-      exitEditingMode()
-    }
-  }
+  const handleEditorKeyUp = useMemoizedFn(
+    (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        exitEditingMode()
+      }
+    },
+  )
 
   return (
     <div className={className}>

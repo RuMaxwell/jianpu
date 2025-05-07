@@ -4,6 +4,7 @@ import CloseIcon from '../assets/icons/close.svg'
 import ChevronLeftIcon from '../assets/icons/chevron-left.svg'
 import ChevronRightIcon from '../assets/icons/chevron-right.svg'
 import './MenuButton.css'
+import { useMemoizedFn } from 'ahooks'
 
 const MenuButton = forwardRef<
   HTMLDivElement,
@@ -17,31 +18,33 @@ const MenuButton = forwardRef<
   const [autoHide, setAutoHide] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
 
-  function handleMenuClick(e: MouseEvent<HTMLButtonElement>) {
+  const handleMenuClick = useMemoizedFn((e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     onClick?.(!isActive)
-  }
+  })
 
-  function handleAutoHideClick(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault()
-    setAutoHide(!autoHide)
-    if (!autoHide) {
-      // Hides menu button immediately if switched to auto-hide.
-      setIsHidden(true)
-    }
-  }
+  const handleAutoHideClick = useMemoizedFn(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault()
+      setAutoHide(!autoHide)
+      if (!autoHide) {
+        // Hides menu button immediately if switched to auto-hide.
+        setIsHidden(true)
+      }
+    },
+  )
 
-  function handleMouseEnter() {
+  const handleMouseEnter = useMemoizedFn(() => {
     if (autoHide) {
       setIsHidden(false)
     }
-  }
+  })
 
-  function handleMouseLeave() {
+  const handleMouseLeave = useMemoizedFn(() => {
     if (autoHide) {
       setIsHidden(true)
     }
-  }
+  })
 
   return (
     <div

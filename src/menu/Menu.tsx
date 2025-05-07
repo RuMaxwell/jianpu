@@ -1,7 +1,7 @@
 import { ChangeEvent, useRef, useState } from 'react'
 import MenuButton from './MenuButton'
 import MenuPanel, { MenuAction } from './MenuPanel'
-import { useClickAway } from 'ahooks'
+import { useClickAway, useMemoizedFn } from 'ahooks'
 
 export default function Menu({
   onFileImported,
@@ -18,11 +18,11 @@ export default function Menu({
 }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
-  function handleMenuButtonClick(open: boolean) {
+  const handleMenuButtonClick = useMemoizedFn((open: boolean) => {
     setMenuIsOpen(open)
-  }
+  })
 
-  function handleMenuAction(action: MenuAction) {
+  const handleMenuAction = useMemoizedFn((action: MenuAction) => {
     switch (action) {
       case MenuAction.ImportMarkdown:
         markdownFileInputRef.current?.click()
@@ -39,7 +39,7 @@ export default function Menu({
     }
 
     setMenuIsOpen(false)
-  }
+  })
 
   const menuButtonRef = useRef<HTMLDivElement>(null)
   const menuPanelRef = useRef<HTMLUListElement>(null)
@@ -54,7 +54,7 @@ export default function Menu({
   const markdownFileInputRef = useRef<HTMLInputElement>(null)
   const jsonFileInputRef = useRef<HTMLInputElement>(null)
 
-  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+  const handleFileChange = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.[0]) {
       return
     }
@@ -77,7 +77,7 @@ export default function Menu({
     }
 
     fileReader.readAsText(file, 'utf-8')
-  }
+  })
 
   return (
     <>

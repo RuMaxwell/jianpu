@@ -6,6 +6,7 @@ import './JianpuStaff.css'
 import { em } from '../../utils/units'
 import { useStaffEditor } from './editor/engine'
 import { useEffect, useState } from 'react'
+import { useMemoizedFn } from 'ahooks'
 
 export default function JianpuStaff({ staff }: { staff: IStaff }) {
   const { notes: initialNotes } = staff
@@ -19,20 +20,22 @@ export default function JianpuStaff({ staff }: { staff: IStaff }) {
   }, [initialNotes])
 
   const [focused, setFocused] = useState(false)
-  function handleFocus() {
+  const handleFocus = useMemoizedFn(() => {
     setFocused(true)
-  }
-  function handleBlur() {
+  })
+  const handleBlur = useMemoizedFn(() => {
     setFocused(false)
-  }
+  })
 
-  function handleInput(event: React.KeyboardEvent<HTMLDivElement>) {
-    console.log(event.key)
-    if (handleKey(event.key)) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-  }
+  const handleInput = useMemoizedFn(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      console.log(event.key)
+      if (handleKey(event.key)) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    },
+  )
 
   useEffect(() => {
     console.log('notes:change', notes)

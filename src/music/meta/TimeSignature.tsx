@@ -1,5 +1,5 @@
+import type { ITimeSignature } from './types'
 import { MusicText } from '../MusicText'
-import { type ITimeSignature } from './musicMeta'
 
 export default function TimeSignature(props: { value: ITimeSignature }) {
   return (

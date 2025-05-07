@@ -9,32 +9,35 @@ import { JianpuMarkdownParser } from './jianpu-markdown/parser'
 import { createAndDownloadFile } from './utils/download'
 import { HtmlParser } from './jianpu-markdown/htmlParser'
 import { jianpuJsonObjectToMarkdown } from './jianpu-markdown/jsonToMarkdown'
+import { useMemoizedFn } from 'ahooks'
 
 const App = () => {
   const [music, setMusic] = useState<IMusicScore>(_exampleMusic as IMusicScore)
 
-  function handleFileImported(fileType: 'markdown' | 'json', content: string) {
-    if (fileType === 'markdown') {
-      const importedMusic = JianpuMarkdownParser.instance.parse(content)
-      console.log('Markdown imported:', importedMusic)
-      setMusic(importedMusic)
-    } else {
-      try {
-        const importedMusic: IMusicScore = JSON.parse(content)
-        console.log('JSON imported:', importedMusic)
+  const handleFileImported = useMemoizedFn(
+    (fileType: 'markdown' | 'json', content: string) => {
+      if (fileType === 'markdown') {
+        const importedMusic = JianpuMarkdownParser.instance.parse(content)
+        console.log('Markdown imported:', importedMusic)
         setMusic(importedMusic)
-      } catch (e) {
-        console.error(e)
-        handleFileImportError(`${e}`)
+      } else {
+        try {
+          const importedMusic: IMusicScore = JSON.parse(content)
+          console.log('JSON imported:', importedMusic)
+          setMusic(importedMusic)
+        } catch (e) {
+          console.error(e)
+          handleFileImportError(`${e}`)
+        }
       }
-    }
-  }
+    },
+  )
 
-  function handleFileImportError(errorMessage: string) {
+  const handleFileImportError = useMemoizedFn((errorMessage: string) => {
     console.error(errorMessage)
-  }
+  })
 
-  function handleExportRequest(format: 'markdown' | 'json') {
+  const handleExportRequest = useMemoizedFn((format: 'markdown' | 'json') => {
     const titleText = music.title
       ? new HtmlParser(music.title).parseToDom().textContent
       : `music-${Date.now()}`
@@ -50,9 +53,9 @@ const App = () => {
       const markdown = jianpuJsonObjectToMarkdown(music)
       createAndDownloadFile(markdown, 'text/plain', `${titleText}.jianpumd`)
     }
-  }
+  })
 
-  function handleAddTitle() {
+  const handleAddTitle = useMemoizedFn(() => {
     if (music.title) {
       return
     }
@@ -60,9 +63,9 @@ const App = () => {
       ...music,
       title: 'Edit Title',
     })
-  }
+  })
 
-  function handleAddComposer() {
+  const handleAddComposer = useMemoizedFn(() => {
     if (music.meta?.composer) {
       return
     }
@@ -73,16 +76,16 @@ const App = () => {
         composer: 'Composer: Edit Composer',
       },
     })
-  }
+  })
 
-  function handleTitleChange(value: string) {
+  const handleTitleChange = useMemoizedFn((value: string) => {
     setMusic({
       ...music,
       title: value,
     })
-  }
+  })
 
-  function handleComposerChange(value: string) {
+  const handleComposerChange = useMemoizedFn((value: string) => {
     setMusic({
       ...music,
       meta: {
@@ -90,7 +93,7 @@ const App = () => {
         composer: value,
       },
     })
-  }
+  })
 
   return (
     <div className='content'>

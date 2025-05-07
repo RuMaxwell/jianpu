@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import './MenuPanel.css'
+import { useMemoizedFn } from 'ahooks'
 
 export enum MenuAction {
   ImportMarkdown,
@@ -15,21 +16,21 @@ const MenuPanel = forwardRef<
     onAction?: (action: MenuAction) => void
   }
 >(({ isOpen, onAction }, ref) => {
-  function handleClickImportMarkdown() {
+  const handleClickImportMarkdown = useMemoizedFn(() => {
     onAction?.(MenuAction.ImportMarkdown)
-  }
+  })
 
-  function handleClickImportJson() {
+  const handleClickImportJson = useMemoizedFn(() => {
     onAction?.(MenuAction.ImportJson)
-  }
+  })
 
-  function handleClickExportMarkdown() {
+  const handleClickExportMarkdown = useMemoizedFn(() => {
     onAction?.(MenuAction.ExportMarkdown)
-  }
+  })
 
-  function handleClickExportJSON() {
+  const handleClickExportJSON = useMemoizedFn(() => {
     onAction?.(MenuAction.ExportJson)
-  }
+  })
 
   return isOpen ? (
     <ul ref={ref} className='menu-panel'>

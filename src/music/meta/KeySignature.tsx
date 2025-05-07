@@ -1,5 +1,5 @@
+import type { IKeySignature } from './types'
 import { MusicText } from '../MusicText'
-import { type IKeySignature } from './musicMeta'
 
 export default function KeySignature(props: { value: IKeySignature }) {
   return (
