@@ -60,12 +60,8 @@
   height: 100%;
 }
 
-@media (prefers-dark-scheme: dark) {
-  .menu-button {
+@media (prefers-color-scheme: dark) {
+  .icon {
     filter: invert(1);
-  }
-
-  .menu-button:hover {
-    filter: invert(0);
   }
 }

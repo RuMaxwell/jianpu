@@ -1,8 +1,8 @@
 import { forwardRef, MouseEvent, useState } from 'react'
 import MenuIcon from '../assets/icons/menu.svg'
 import CloseIcon from '../assets/icons/close.svg'
-import ChevronLeftIcon from '../assets/icons/chevron-left.svg'
-import ChevronRightIcon from '../assets/icons/chevron-right.svg'
+import ChevronUpIcon from '../assets/icons/chevron-up.svg'
+import ChevronDownIcon from '../assets/icons/chevron-down.svg'
 import './MenuButton.css'
 import { useMemoizedFn } from 'ahooks'
 
@@ -65,7 +65,7 @@ const MenuButton = forwardRef<
         <button className='menu-button' onClick={handleAutoHideClick}>
           <img
             className='icon'
-            src={autoHide ? ChevronRightIcon : ChevronLeftIcon}
+            src={autoHide ? ChevronDownIcon : ChevronUpIcon}
           ></img>
         </button>
         <button className='menu-button' onClick={handleMenuClick}>

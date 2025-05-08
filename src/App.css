@@ -15,6 +15,10 @@ html {
     color: var(--fg-color);
     background: var(--bg-color);
   }
+
+  button {
+    color: #ffffff;
+  }
 }
 
 body {

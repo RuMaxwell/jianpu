@@ -24,8 +24,9 @@ li.menu-item:hover {
   filter: invert(1);
 }
 
-@media (prefers-dark-scheme: dark) {
-  .menu {
-    border: 2px solid white;
+@media (prefers-color-scheme: dark) {
+  ul.menu-panel {
+    border: 2px solid #bdbdbd;
+    box-shadow: 3px 3px 0 0 #bdbdbd;
   }
 }
