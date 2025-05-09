@@ -1,15 +1,19 @@
+import type { MaybePromise } from '../utils/types'
 import { ChangeEvent, useRef, useState } from 'react'
 import MenuButton from './MenuButton'
 import MenuPanel, { MenuAction } from './MenuPanel'
 import { useClickAway, useMemoizedFn } from 'ahooks'
 
 export default function Menu({
+  beforeSelectFileToImport,
   onFileImported,
   onFileImportError,
   onExportRequest,
   onAddTitle,
   onAddComposer,
 }: {
+  /** Returns `cancel` to cancel file selection. */
+  beforeSelectFileToImport?: () => MaybePromise<'cancel' | undefined>
   onFileImported?: (fileType: 'markdown' | 'json', content: string) => void
   onFileImportError?: (errorMessage: string) => void
   onExportRequest?: (format: 'markdown' | 'json') => void
@@ -22,12 +26,18 @@ export default function Menu({
     setMenuIsOpen(open)
   })
 
-  const handleMenuAction = useMemoizedFn((action: MenuAction) => {
+  const handleMenuAction = useMemoizedFn(async (action: MenuAction) => {
     switch (action) {
       case MenuAction.ImportMarkdown:
+        if ((await beforeSelectFileToImport?.()) === 'cancel') {
+          return
+        }
         markdownFileInputRef.current?.click()
         break
       case MenuAction.ImportJson:
+        if ((await beforeSelectFileToImport?.()) === 'cancel') {
+          return
+        }
         jsonFileInputRef.current?.click()
         break
       case MenuAction.ExportMarkdown:

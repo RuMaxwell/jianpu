@@ -5,6 +5,7 @@ import ChevronUpIcon from '../assets/icons/chevron-up.svg'
 import ChevronDownIcon from '../assets/icons/chevron-down.svg'
 import './MenuButton.css'
 import { useMemoizedFn } from 'ahooks'
+import { Button } from '../button/Button'
 
 const MenuButton = forwardRef<
   HTMLDivElement,
@@ -62,21 +63,16 @@ const MenuButton = forwardRef<
           (isHidden ? 'slide-hidden ' : '')
         }
       >
-        <button className='menu-button' onClick={handleAutoHideClick}>
-          <img
-            className='icon'
-            src={autoHide ? ChevronDownIcon : ChevronUpIcon}
-          ></img>
-        </button>
-        <button className='menu-button' onClick={handleMenuClick}>
-          <img className='icon' src={isActive ? CloseIcon : MenuIcon}></img>
-        </button>
-        <button className='menu-text-button' onClick={onAddTitle}>
-          +Title
-        </button>
-        <button className='menu-text-button' onClick={onAddComposer}>
-          +Composer
-        </button>
+        <Button
+          icon={autoHide ? ChevronDownIcon : ChevronUpIcon}
+          onClick={handleAutoHideClick}
+        />
+        <Button
+          icon={isActive ? CloseIcon : MenuIcon}
+          onClick={handleMenuClick}
+        />
+        <Button text='+Title' onClick={onAddTitle} />
+        <Button text='+Composer' onClick={onAddComposer} />
       </div>
     </div>
   )

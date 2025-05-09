@@ -1,0 +1,50 @@
+.dialog-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(1px);
+}
+
+.dialog-modal.modal-off {
+  pointer-events: none;
+  backdrop-filter: none;
+}
+
+.dialog {
+  position: relative;
+  min-width: 300px;
+  max-width: 100vw;
+  border: 3px solid var(--strong-fg-color);
+  box-shadow: 4px 4px 0 0 var(--strong-fg-color);
+  background-color: var(--bg-color);
+  padding: 0;
+  color: var(--fg-color);
+}
+
+.dialog-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--strong-fg-color);
+}
+
+.dialog-body {
+  width: 100%;
+  min-height: 3rem;
+  max-height: calc(100vh - 2rem - 6px);
+  padding: 1rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.dialog-footer {
+  width: 100%;
+  text-align: right;
+}

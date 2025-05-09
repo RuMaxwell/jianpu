@@ -1,23 +1,34 @@
 html {
   --fg-color: #424242;
   --bg-color: #efe9da;
+  --strong-fg-color: #000000;
 
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   color: var(--fg-color);
   background: var(--bg-color);
 }
 
+input,
+textarea {
+  color: var(--fg-color);
+}
+
+button {
+  color: var(--strong-fg-color);
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     --fg-color: #f7f7f7;
     --bg-color: #424242;
+    --strong-fg-color: #ffffff;
 
     color: var(--fg-color);
     background: var(--bg-color);
   }
 
   button {
-    color: #ffffff;
+    color: var(--strong-fg-color);
   }
 }
 

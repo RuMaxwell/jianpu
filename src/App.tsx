@@ -10,9 +10,48 @@ import { createAndDownloadFile } from './utils/download'
 import { HtmlParser } from './jianpu-markdown/htmlParser'
 import { jianpuJsonObjectToMarkdown } from './jianpu-markdown/jsonToMarkdown'
 import { useMemoizedFn } from 'ahooks'
+import Dialog from './dialog/Dialog'
+import { useDialog } from './dialog/useDialog'
 
 const App = () => {
   const [music, setMusic] = useState<IMusicScore>(_exampleMusic as IMusicScore)
+
+  const { isOpen, open: openDialog, close: closeDialog, message } = useDialog()
+  const [dialogPendingOn, setDialogPendingOn] = useState<
+    | null
+    | 'replace-title'
+    | 'replace-composer'
+    | { type: 'import'; resolve: (should: 'cancel' | undefined) => void }
+  >(null)
+
+  const beforeSelectFileToImport = useMemoizedFn(
+    () =>
+      new Promise<'cancel' | undefined>((resolve) => {
+        if (
+          music.title.trim() ||
+          music.meta.composer?.trim() ||
+          music.meta.key ||
+          music.meta.tempo ||
+          music.staff.notes.length
+        ) {
+          openDialog('Replacing the music score, continue?')
+          setDialogPendingOn({ type: 'import', resolve })
+          return
+        }
+      }),
+  )
+
+  const continueSelectFileToImport = useMemoizedFn(() => {
+    ;(
+      dialogPendingOn as { resolve: (should: 'cancel' | undefined) => void }
+    ).resolve(undefined)
+  })
+
+  const cancelSelectFileToImport = useMemoizedFn(() => {
+    ;(
+      dialogPendingOn as { resolve: (should: 'cancel' | undefined) => void }
+    ).resolve('cancel')
+  })
 
   const handleFileImported = useMemoizedFn(
     (fileType: 'markdown' | 'json', content: string) => {
@@ -56,9 +95,15 @@ const App = () => {
   })
 
   const handleAddTitle = useMemoizedFn(() => {
-    if (music.title) {
+    if (music.title.trim()) {
+      openDialog('Replacing current title, continue?')
+      setDialogPendingOn('replace-title')
       return
     }
+    replaceWithDefaultTitle()
+  })
+
+  const replaceWithDefaultTitle = useMemoizedFn(() => {
     setMusic({
       ...music,
       title: 'Edit Title',
@@ -66,9 +111,15 @@ const App = () => {
   })
 
   const handleAddComposer = useMemoizedFn(() => {
-    if (music.meta?.composer) {
+    if (music.meta.composer?.trim()) {
+      openDialog('Replacing current composer, continue?')
+      setDialogPendingOn('replace-composer')
       return
     }
+    replaceWithDefaultComposer()
+  })
+
+  const replaceWithDefaultComposer = useMemoizedFn(() => {
     setMusic({
       ...music,
       meta: {
@@ -95,9 +146,33 @@ const App = () => {
     })
   })
 
+  const handleDialogConfirm = useMemoizedFn(() => {
+    closeDialog()
+    switch (dialogPendingOn) {
+      case 'replace-title':
+        replaceWithDefaultTitle()
+        break
+      case 'replace-composer':
+        replaceWithDefaultComposer()
+        break
+      default:
+        if (dialogPendingOn?.type === 'import') {
+          continueSelectFileToImport()
+        }
+    }
+  })
+
+  const handleDialogCancel = useMemoizedFn(() => {
+    closeDialog()
+    if ((dialogPendingOn as any)?.type === 'import') {
+      cancelSelectFileToImport()
+    }
+  })
+
   return (
     <div className='content'>
       <Menu
+        beforeSelectFileToImport={beforeSelectFileToImport}
         onFileImported={handleFileImported}
         onFileImportError={handleFileImportError}
         onExportRequest={handleExportRequest}
@@ -113,6 +188,13 @@ const App = () => {
         staff={music.staff}
         onTitleChange={handleTitleChange}
         onComposerChange={handleComposerChange}
+      />
+
+      <Dialog
+        isOpen={isOpen}
+        message={message}
+        onClose={handleDialogCancel}
+        onConfirm={handleDialogConfirm}
       />
     </div>
   )
