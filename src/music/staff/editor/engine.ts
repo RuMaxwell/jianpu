@@ -138,41 +138,27 @@ export function useStaffEditor(initialNotes?: INote[]) {
   }
 
   const handleDotKey = () => {
-    const lastNote = notes[cursor - 1]
-    if (
-      isPitchNote(lastNote) ||
-      lastNote?.type === 'rest' ||
-      lastNote?.type === 'dot'
-    ) {
-      setNotes((prev) => {
-        const newNotes = [...prev]
-        newNotes.splice(cursor, 0, {
-          id: genId(cursor),
-          type: 'dot',
-        })
-        return newNotes
+    setNotes((prev) => {
+      const newNotes = [...prev]
+      newNotes.splice(cursor, 0, {
+        id: genId(cursor),
+        type: 'dot',
       })
-      setCursor(cursor + 1)
-    }
+      return newNotes
+    })
+    setCursor(cursor + 1)
   }
 
   const handleDashKey = () => {
-    const lastNote = notes[cursor - 1]
-    if (
-      isPitchNote(lastNote) ||
-      lastNote?.type === 'rest' ||
-      lastNote?.type === 'dash'
-    ) {
-      setNotes((prev) => {
-        const newNotes = [...prev]
-        newNotes.splice(cursor, 0, {
-          id: genId(cursor),
-          type: 'dash',
-        })
-        return newNotes
+    setNotes((prev) => {
+      const newNotes = [...prev]
+      newNotes.splice(cursor, 0, {
+        id: genId(cursor),
+        type: 'dash',
       })
-      setCursor(cursor + 1)
-    }
+      return newNotes
+    })
+    setCursor(cursor + 1)
   }
 
   const handleLeftSquaredBracketKey = () => {

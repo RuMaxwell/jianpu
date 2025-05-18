@@ -7,6 +7,10 @@
 + Slurs (curved lines above notes) (single layer only)
 + Automatically restore last edited music when refreshed.
 
+### Changes
+
++ Remove the restriction of where a dot/dash can be.
+
 ### Fixes
 
 - Fix a bug where the editor could not be focused to start edit when there was no note.

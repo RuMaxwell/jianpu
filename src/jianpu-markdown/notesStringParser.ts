@@ -72,21 +72,11 @@ export class NotesStringParser {
   }
 
   private handleDot(): void {
-    const prev = this.notes[this.notes.length - 1]
-    if (!prev?.type || prev.type === 'dot' || prev.type === 'rest') {
-      this.pushNote({ type: 'dot' })
-    } else {
-      console.warn(`Unexpected '.' after ${prev.type}. Ignoring it.`)
-    }
+    this.pushNote({ type: 'dot' })
   }
 
   private handleDash(): void {
-    const prev = this.notes[this.notes.length - 1]
-    if (!prev?.type || prev.type === 'dash' || prev.type === 'rest') {
-      this.pushNote({ type: 'dash' })
-    } else {
-      console.warn(`Unexpected '-' after ${prev.type}. Ignoring it.`)
-    }
+    this.pushNote({ type: 'dash' })
   }
 
   private handlePitchModifier(modifier: string): void {
