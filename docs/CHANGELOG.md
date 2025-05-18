@@ -6,6 +6,10 @@
 
 + Slurs (curved lines above notes) (single layer only)
 
+### Fixes
+
+- Fix a bug where the editor could not be focused to start edit when there was no note.
+
 ## Version 0.0.4-alpha
 
 ### Features
@@ -14,8 +18,8 @@
 
 ### Fixes
 
-- Fix when exporting music as Jianpu Markdown file, that there are extra commas between `h`, `l`, and `/` symbols.
-- Fix when exporting music as Jianpu Markdown file, that notes are still in the oldest version even though the notes were modified.
+- Fix a bug where extra commas appeared between `h`, `l`, and `/` symbols when exporting music as Jianpu Markdown file.
+- Fix a bug where notes were still in the oldest version even though they had been modified when exporting music as Jianpu Markdown file.
 
 ## Version 0.0.3-alpha
 
