@@ -1,5 +1,11 @@
 # Change log
 
+## Version 0.0.5-alpha
+
+### Features
+
++ Slurs (curved lines above notes) (single layer only)
+
 ## Version 0.0.4-alpha
 
 ### Features

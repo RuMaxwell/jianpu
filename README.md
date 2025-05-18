@@ -86,7 +86,7 @@ pnpm preview
       - [x] Insert dots and dashes
       - [x] Insert bar lines
       - [x] Delete notes
-      - [ ] Attach slurs
+      - [x] Attach slurs
     - [x] Modification
       - [x] Whole-score pitch shifting
   - [ ] Intellisense

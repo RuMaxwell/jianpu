@@ -7,6 +7,22 @@ import { em } from '../../utils/units'
 import { useStaffEditor } from './editor/engine'
 import { useEffect, useState } from 'react'
 import { useMemoizedFn } from 'ahooks'
+import { ArrayUtil } from '../../utils/array'
+
+type StaffContext = {
+  name: 'initial' | 'slurStart' | 'slur' | 'slurEnd'
+}
+
+const thinNoteTypes = new Set<string | undefined>(['dot'])
+const zeroWidthNoteTypes = new Set<string | undefined>(['slurStart', 'slurEnd'])
+
+function noteWidthClassName(note: INote): string {
+  return thinNoteTypes.has(note.type)
+    ? 'thin-note '
+    : zeroWidthNoteTypes.has(note.type)
+    ? 'zero-width-note '
+    : ''
+}
 
 export default function JianpuStaff({
   newStaff,
@@ -48,6 +64,9 @@ export default function JianpuStaff({
     onNotesChange?.(notes)
   }, [notes])
 
+  // Big notations (e.g. slurs) needs to store contexts.
+  const contexts: StaffContext[] = [{ name: 'initial' }]
+
   return (
     <div
       className='jianpu-staff'
@@ -56,20 +75,47 @@ export default function JianpuStaff({
       onBlur={handleBlur}
       onKeyDown={handleInput}
     >
-      {notes.map((note, index) => (
-        <div
-          key={index}
-          className={
-            'jianpu-note ' +
-            ('type' in note && note.type === 'dot' ? 'thin-note ' : '')
-          }
-        >
-          {focused && index === cursor && (
-            <div key='cursor' className='staff-editor-cursor'></div>
-          )}
-          <JianpuNote note={note} />
-        </div>
-      ))}
+      {notes.map((note, index) => {
+        return (
+          <div
+            key={index}
+            className={'jianpu-note ' + noteWidthClassName(note)}
+          >
+            {
+              /* normal cursor */
+              focused &&
+                index === cursor &&
+                notes[index - 1]?.type !== 'slurStart' &&
+                notes[index - 1]?.type !== 'slurEnd' && (
+                  <div key='cursor' className='staff-editor-cursor'></div>
+                )
+            }
+            {
+              /* cursor for zero-width notes */
+              focused &&
+                index === cursor &&
+                (notes[index - 1]?.type === 'slurStart' ||
+                  notes[index - 1]?.type === 'slurEnd') && (
+                  <div
+                    key='slurStartCursor'
+                    className={
+                      'staff-editor-slur-delimiter-cursor ' +
+                      (notes[index - 1]?.type === 'slurEnd'
+                        ? 'slur-end-cursor '
+                        : '')
+                    }
+                  ></div>
+                )
+            }
+            <JianpuNote
+              note={note}
+              index={index}
+              notes={notes}
+              contexts={contexts}
+            />
+          </div>
+        )
+      })}
 
       {focused && cursor === notes.length && (
         <div className='staff-editor-cursor cursor-at-last'></div>
@@ -78,12 +124,54 @@ export default function JianpuStaff({
   )
 }
 
-function JianpuNote({ note }: { note: INote }) {
-  const ConcreteNote = getNoteComponent(note)
+function JianpuNote({
+  note,
+  index,
+  notes,
+  contexts,
+}: {
+  note: INote
+  index: number
+  notes: INote[]
+  contexts: StaffContext[]
+}) {
+  const ConcreteNote = getNoteComponent(note, index, notes, contexts)
   return ConcreteNote
 }
 
-function getNoteComponent(note: INote) {
+function getNoteComponent(
+  note: INote,
+  index: number,
+  notes: INote[],
+  contexts: StaffContext[],
+) {
+  const MainNoteComponent = () => getMainNoteComponent(note)
+
+  // Change contexts if necessary
+  switch (note.type) {
+    case 'slurStart':
+      contexts.push({ name: 'slur' })
+      break
+    case 'slurEnd':
+      ArrayUtil.popLast(contexts, (context) => context.name === 'slur')
+      break
+    default:
+  }
+
+  return (
+    <>
+      <MainNoteComponent />
+      <NoteDecoration
+        note={note}
+        index={index}
+        notes={notes}
+        contexts={contexts}
+      />
+    </>
+  )
+}
+
+function getMainNoteComponent(note: INote): JSX.Element | null {
   if ('type' in note) {
     switch (note.type) {
       case 'rest':
@@ -104,12 +192,97 @@ function getNoteComponent(note: INote) {
         )
       case 'text':
         return <div className='jianpu-text-note'>{note.text}</div>
+      case 'slurStart':
+      case 'slurEnd':
       default:
         return null
     }
   } else {
     return <JianpuPitch note={note}></JianpuPitch>
   }
+}
+
+function NoteDecoration({
+  note,
+  index,
+  notes,
+  contexts,
+}: {
+  note: INote
+  index: number
+  notes: INote[]
+  contexts: StaffContext[]
+}) {
+  if (
+    ArrayUtil.findLastIndex(contexts, (context) => context.name === 'slur') !==
+    -1
+  ) {
+    if (note.type === 'slurStart') {
+      return null
+    }
+    if (notes[index + 1]?.type === 'slurEnd') {
+      return (
+        <div className='jianpu-slur jianpu-slur-end'>
+          <svg
+            width='1em'
+            height='1em'
+            viewBox='0 0 10 10'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path d='M 0 5 C 2 5 5 6.5 5 10' fill='transparent'></path>
+          </svg>
+        </div>
+      )
+    }
+    if (notes[index - 1]?.type === 'slurStart') {
+      return (
+        <div className='jianpu-slur'>
+          <svg
+            width='1em'
+            height='1em'
+            viewBox='0 0 10 10'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path d='M 5 10 C 5 8 6.5 5 10 5' fill='transparent'></path>
+          </svg>
+        </div>
+      )
+    }
+    return (
+      <div className='jianpu-slur jianpu-slur-continue'>
+        <svg
+          width={
+            !note.type && note.pitch.accidental
+              ? '1.6em'
+              : thinNoteTypes.has(note.type)
+              ? '0.6em'
+              : '1.1em'
+          }
+          height='1em'
+          viewBox={
+            !note.type && note.pitch.accidental
+              ? '0 0 16 10'
+              : thinNoteTypes.has(note.type)
+              ? '0 0 6 10'
+              : '0 0 11 10'
+          }
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d={
+              !note.type && note.pitch.accidental
+                ? 'M 0 5 L 16 5'
+                : thinNoteTypes.has(note.type)
+                ? 'M 0 5 L 6 5'
+                : 'M 0 5 L 11 5'
+            }
+            fill='transparent'
+          ></path>
+        </svg>
+      </div>
+    )
+  }
+  return null
 }
 
 function JianpuPitch(props: { note: IPitchNote }) {

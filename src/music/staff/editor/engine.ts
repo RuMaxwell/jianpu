@@ -3,8 +3,8 @@ import type { IBar, INote, IPitchNote, ITextNote } from '../staff'
 import { Accidental } from '../../meta/types'
 import { JIANPU_NOTE_TO_MUSIC_NOTE } from '../../music'
 
-const NOTE_KEY_SET = new Set(['0', '1', '2', '3', '4', '5', '6', '7'])
-const TEXT_KEY_SET = new Set([':'])
+const NOTE_KEY_SET = new Set('01234567'.split(''))
+const TEXT_KEY_SET = new Set(':'.split(''))
 
 function genId(cursor: number) {
   return `${Date.now()}-${cursor}`
@@ -175,6 +175,30 @@ export function useStaffEditor(initialNotes?: INote[]) {
     }
   }
 
+  const handleLeftSquaredBracketKey = () => {
+    setNotes((prev) => {
+      const newNotes = [...prev]
+      newNotes.splice(cursor, 0, {
+        id: genId(cursor),
+        type: 'slurStart',
+      })
+      return newNotes
+    })
+    setCursor(cursor + 1)
+  }
+
+  const handleRightSquaredBracketKey = () => {
+    setNotes((prev) => {
+      const newNotes = [...prev]
+      newNotes.splice(cursor, 0, {
+        id: genId(cursor),
+        type: 'slurEnd',
+      })
+      return newNotes
+    })
+    setCursor(cursor + 1)
+  }
+
   const insertRestNote = () => {
     setNotes((prev) => {
       const newNotes = [...prev]
@@ -263,6 +287,12 @@ export function useStaffEditor(initialNotes?: INote[]) {
         break
       case '-':
         handleDashKey()
+        break
+      case '[':
+        handleLeftSquaredBracketKey()
+        break
+      case ']':
+        handleRightSquaredBracketKey()
         break
       case '#':
       case 'b':

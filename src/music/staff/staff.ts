@@ -17,6 +17,12 @@ export type INote =
   | (INoteId & {
       type: 'dash'
     })
+  | (INoteId & {
+      type: 'slurStart'
+    })
+  | (INoteId & {
+      type: 'slurEnd'
+    })
   | IBar
   | ITextNote
 
