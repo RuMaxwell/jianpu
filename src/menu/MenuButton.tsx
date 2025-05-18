@@ -7,15 +7,25 @@ import './MenuButton.css'
 import { useMemoizedFn } from 'ahooks'
 import { Button } from '../button/Button'
 
-const MenuButton = forwardRef<
-  HTMLDivElement,
-  {
-    isActive?: boolean
-    onClick?: (active: boolean) => void
-    onAddTitle?: () => void
-    onAddComposer?: () => void
-  }
->(({ isActive, onClick, onAddTitle, onAddComposer }, ref) => {
+interface IProps {
+  isActive?: boolean
+  onClick?: (active: boolean) => void
+  onAddTitle?: () => void
+  onAddComposer?: () => void
+  onPitchShiftHigher?: () => void
+  onPitchShiftLower?: () => void
+}
+
+const MenuButton = forwardRef<HTMLDivElement, IProps>((props, ref) => {
+  const {
+    isActive,
+    onClick,
+    onAddTitle,
+    onAddComposer,
+    onPitchShiftHigher,
+    onPitchShiftLower,
+  } = props
+
   const [autoHide, setAutoHide] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
 
@@ -73,6 +83,8 @@ const MenuButton = forwardRef<
         />
         <Button text='+Title' onClick={onAddTitle} />
         <Button text='+Composer' onClick={onAddComposer} />
+        <Button text='+Pitch' onClick={onPitchShiftHigher} />
+        <Button text='-Pitch' onClick={onPitchShiftLower} />
       </div>
     </div>
   )

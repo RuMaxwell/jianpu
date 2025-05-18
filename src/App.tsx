@@ -161,6 +161,33 @@ const App = () => {
     })
   })
 
+  const shiftPitch = useMemoizedFn(
+    (halfNotes: 1 | -1, mode: 'auto' | 'sharp' | 'flat') => {
+      setMusic({
+        ...music,
+        staff: {
+          notes: music.staff.notes.map((note) => {
+            if (note.type) {
+              return note
+            }
+            return {
+              ...note,
+              pitch: Note.shiftPitch(note.pitch, halfNotes, mode),
+            }
+          }),
+        },
+      })
+    },
+  )
+
+  const onPitchShiftHigher = useMemoizedFn(() => {
+    shiftPitch(1, 'auto')
+  })
+
+  const onPitchShiftLower = useMemoizedFn(() => {
+    shiftPitch(-1, 'auto')
+  })
+
   const handleDialogConfirm = useMemoizedFn(() => {
     closeDialog()
     switch (dialogPendingOn) {
@@ -193,6 +220,8 @@ const App = () => {
         onExportRequest={handleExportRequest}
         onAddTitle={handleAddTitle}
         onAddComposer={handleAddComposer}
+        onPitchShiftHigher={onPitchShiftHigher}
+        onPitchShiftLower={onPitchShiftLower}
       />
 
       <Stage

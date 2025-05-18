@@ -11,6 +11,8 @@ export default function Menu({
   onExportRequest,
   onAddTitle,
   onAddComposer,
+  onPitchShiftHigher,
+  onPitchShiftLower,
 }: {
   /** Returns `cancel` to cancel file selection. */
   beforeSelectFileToImport?: () => MaybePromise<'cancel' | undefined>
@@ -19,6 +21,8 @@ export default function Menu({
   onExportRequest?: (format: 'markdown' | 'json') => void
   onAddTitle?: () => void
   onAddComposer?: () => void
+  onPitchShiftHigher?: () => void
+  onPitchShiftLower?: () => void
 }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
 
@@ -97,6 +101,8 @@ export default function Menu({
         onClick={handleMenuButtonClick}
         onAddTitle={onAddTitle}
         onAddComposer={onAddComposer}
+        onPitchShiftHigher={onPitchShiftHigher}
+        onPitchShiftLower={onPitchShiftLower}
       />
       <MenuPanel
         ref={menuPanelRef}

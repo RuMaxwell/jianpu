@@ -1,5 +1,4 @@
-import type { Accidental } from '../meta/types'
-import type { Note } from '../music'
+import type { IPitch } from '../music'
 
 export interface IStaff {
   notes: INote[]
@@ -25,12 +24,6 @@ export interface IPitchNote extends INoteId {
   type?: undefined
   pitch: IPitch
   denominator: number // 1 = whole note, 2 = half note, 4 = quarter note, etc.
-}
-
-export interface IPitch {
-  note: Note
-  accidental?: Accidental
-  octave: number
 }
 
 export interface IRestNote extends INoteId {

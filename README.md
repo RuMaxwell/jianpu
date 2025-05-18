@@ -87,6 +87,8 @@ pnpm preview
       - [x] Insert bar lines
       - [x] Delete notes
       - [ ] Attach slurs
+    - [x] Modification
+      - [x] Whole-score pitch shifting
   - [ ] Intellisense
     - [ ] Warn if a bar has less or more beats than those restricted by the time signature
   - [x] Import/Export

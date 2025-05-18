@@ -1,5 +1,5 @@
-import type { INote, IPitch } from '../music/staff/staff'
-import { IMusicScore, type Note } from '../music/music'
+import type { INote } from '../music/staff/staff'
+import { IMusicScore, type IPitch, type Note } from '../music/music'
 import { Accidental, type ITimeSignature } from '../music/meta/types'
 import { Version } from '../utils/version'
 import { NotesStringParser } from './notesStringParser'

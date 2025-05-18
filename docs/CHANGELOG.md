@@ -1,5 +1,16 @@
 # Change log
 
+## Version 0.0.4-alpha
+
+### Features
+
++ Pitch shifting of the whole score (a half note at a time).
+
+### Fixes
+
+- Fix when exporting music as Jianpu Markdown file, that there are extra commas between `h`, `l`, and `/` symbols.
+- Fix when exporting music as Jianpu Markdown file, that notes are still in the oldest version even though the notes were modified.
+
 ## Version 0.0.3-alpha
 
 ### Features
