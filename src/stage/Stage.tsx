@@ -3,7 +3,7 @@ import { px } from '../utils/units'
 import MusicTitle from '../music/MusicTitle'
 import MusicMeta from '../music/meta/MusicMeta'
 import { IKeySignature, ITimeSignature } from '../music/meta/types'
-import { IStaff } from '../music/staff/staff'
+import type { INote, IStaff } from '../music/staff/staff'
 import JianpuStaff from '../music/staff/JianpuStaff'
 
 export default function Stage(props: {
@@ -11,18 +11,20 @@ export default function Stage(props: {
   keySignature?: IKeySignature
   timeSignature?: ITimeSignature
   composerHtml?: string
-  staff?: IStaff
+  newStaff?: IStaff
   onTitleChange?: (value: string) => void
   onComposerChange?: (value: string) => void
+  onNotesChange?: (value: INote[]) => void
 }) {
   const {
     titleHtml,
     keySignature,
     timeSignature,
     composerHtml,
-    staff,
+    newStaff,
     onTitleChange,
     onComposerChange,
+    onNotesChange,
   } = props
 
   const windowSize = useSize(document.body)
@@ -30,14 +32,14 @@ export default function Stage(props: {
 
   return (
     <div style={{ width: px(width) }}>
-      <MusicTitle titleHtml={titleHtml} onChange={onTitleChange}></MusicTitle>
+      <MusicTitle titleHtml={titleHtml} onChange={onTitleChange} />
       <MusicMeta
         keySignature={keySignature}
         timeSignature={timeSignature}
         composerHtml={composerHtml}
         onComposerChange={onComposerChange}
-      ></MusicMeta>
-      {staff && <JianpuStaff staff={staff}></JianpuStaff>}
+      />
+      <JianpuStaff newStaff={newStaff} onNotesChange={onNotesChange} />
     </div>
   )
 }

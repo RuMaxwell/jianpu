@@ -8,16 +8,22 @@ import { useStaffEditor } from './editor/engine'
 import { useEffect, useState } from 'react'
 import { useMemoizedFn } from 'ahooks'
 
-export default function JianpuStaff({ staff }: { staff: IStaff }) {
-  const { notes: initialNotes } = staff
-
-  const { notes, setNotes, cursor, setCursor, handleKey } =
-    useStaffEditor(initialNotes)
+export default function JianpuStaff({
+  newStaff,
+  onNotesChange,
+}: {
+  /** Only update this when the staff need to be completely replaced. Do not update it when notes change. */
+  newStaff?: IStaff
+  onNotesChange?: (notes: INote[]) => void
+}) {
+  const { notes, setNotes, cursor, setCursor, handleKey } = useStaffEditor(
+    newStaff?.notes,
+  )
 
   useEffect(() => {
-    setNotes(initialNotes)
-    setCursor(initialNotes.length)
-  }, [initialNotes])
+    setNotes(newStaff?.notes ?? [])
+    setCursor(newStaff?.notes?.length ?? 0)
+  }, [newStaff?.notes])
 
   const [focused, setFocused] = useState(false)
   const handleFocus = useMemoizedFn(() => {
@@ -39,6 +45,7 @@ export default function JianpuStaff({ staff }: { staff: IStaff }) {
 
   useEffect(() => {
     console.log('notes:change', notes)
+    onNotesChange?.(notes)
   }, [notes])
 
   return (

@@ -1,7 +1,7 @@
-import type { IMusicScore } from './music/music'
-
 import { useState } from 'react'
 import './App.css'
+import { Note, type IMusicScore } from './music/music'
+import { type INote, type IStaff } from './music/staff/staff'
 import Stage from './stage/Stage'
 import Menu from './menu/Menu'
 import _exampleMusic from './example-musics/example.jianpu.json'
@@ -15,6 +15,9 @@ import { useDialog } from './dialog/useDialog'
 
 const App = () => {
   const [music, setMusic] = useState<IMusicScore>(_exampleMusic as IMusicScore)
+  const [newStaff, setNewStaff] = useState<IStaff>(
+    _exampleMusic.staff as IStaff,
+  )
 
   const { isOpen, open: openDialog, close: closeDialog, message } = useDialog()
   const [dialogPendingOn, setDialogPendingOn] = useState<
@@ -23,6 +26,16 @@ const App = () => {
     | 'replace-composer'
     | { type: 'import'; resolve: (should: 'cancel' | undefined) => void }
   >(null)
+
+  const handleStaffNotesChange = useMemoizedFn((value: INote[]) => {
+    setMusic({
+      ...music,
+      staff: {
+        ...music.staff,
+        notes: value,
+      },
+    })
+  })
 
   const beforeSelectFileToImport = useMemoizedFn(
     () =>
@@ -59,11 +72,13 @@ const App = () => {
         const importedMusic = JianpuMarkdownParser.instance.parse(content)
         console.log('Markdown imported:', importedMusic)
         setMusic(importedMusic)
+        setNewStaff(importedMusic.staff)
       } else {
         try {
           const importedMusic: IMusicScore = JSON.parse(content)
           console.log('JSON imported:', importedMusic)
           setMusic(importedMusic)
+          setNewStaff(importedMusic.staff)
         } catch (e) {
           console.error(e)
           handleFileImportError(`${e}`)
@@ -185,9 +200,10 @@ const App = () => {
         keySignature={music.meta.key}
         timeSignature={music.meta.tempo}
         composerHtml={music.meta.composer}
-        staff={music.staff}
+        newStaff={newStaff}
         onTitleChange={handleTitleChange}
         onComposerChange={handleComposerChange}
+        onNotesChange={handleStaffNotesChange}
       />
 
       <Dialog
