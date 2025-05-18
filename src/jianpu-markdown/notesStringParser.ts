@@ -42,6 +42,12 @@ export class NotesStringParser {
         case '-':
           this.handleDash()
           break
+        case '[':
+          this.pushNote({ type: 'slurStart' })
+          break
+        case ']':
+          this.pushNote({ type: 'slurEnd' })
+          break
         case ':':
           this.pushNote({ type: 'text', text: ':' } as INote)
           break

@@ -56,6 +56,12 @@ export function jianpuJsonObjectToMarkdown(jsonObject: IMusicScore): string {
         case 'dot':
           notesString += '.'
           break
+        case 'slurStart':
+          notesString += '['
+          break
+        case 'slurEnd':
+          notesString += ']'
+          break
         case 'text':
           notesString += note.text
           break
