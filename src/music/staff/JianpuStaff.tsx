@@ -117,9 +117,31 @@ export default function JianpuStaff({
         )
       })}
 
-      {focused && cursor === notes.length && (
-        <div className='staff-editor-cursor cursor-at-last'></div>
-      )}
+      {
+        /* cursor after the last note */
+        focused &&
+          cursor === notes.length &&
+          notes[notes.length - 1]?.type !== 'slurStart' &&
+          notes[notes.length - 1]?.type !== 'slurEnd' && (
+            <div className='staff-editor-cursor cursor-at-last'></div>
+          )
+      }
+      {
+        /* cursor for the last zero-width note */
+        focused &&
+          cursor === notes.length &&
+          (notes[notes.length - 1]?.type === 'slurStart' ||
+            notes[notes.length - 1]?.type === 'slurEnd') && (
+            <div
+              className={
+                'staff-editor-slur-delimiter-cursor cursor-at-last ' +
+                (notes[notes.length - 1]?.type === 'slurEnd'
+                  ? 'slur-end-cursor '
+                  : '')
+              }
+            ></div>
+          )
+      }
     </div>
   )
 }
