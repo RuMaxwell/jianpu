@@ -87,15 +87,15 @@ function octave(value?: number): string {
       : value > 4
       ? Array(value - 4)
           .fill('h')
-          .join()
+          .join('')
       : Array(4 - value)
           .fill('l')
-          .join()
+          .join('')
     : ''
 }
 
 function duration(denominator: number): string {
   return Array(Math.log2(denominator) - 2)
     .fill('/')
-    .join()
+    .join('')
 }
