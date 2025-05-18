@@ -77,7 +77,7 @@ pnpm preview
       - [x] Keyboard Left/Right arrow as the basic method to navigate the cursor
       - [ ] Keyboard Up/Down arrow to move the cursor vertically
       - [ ] Click on the staff to navigate the cursor
-    - [ ] Input and change
+    - [x] Input and change
       - [x] Insert pitch notes
       - [x] Insert octave dots
       - [x] Insert half duration lines

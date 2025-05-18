@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Note, type IMusicScore } from './music/music'
 import { type INote, type IStaff } from './music/staff/staff'
@@ -9,15 +9,23 @@ import { JianpuMarkdownParser } from './jianpu-markdown/parser'
 import { createAndDownloadFile } from './utils/download'
 import { HtmlParser } from './jianpu-markdown/htmlParser'
 import { jianpuJsonObjectToMarkdown } from './jianpu-markdown/jsonToMarkdown'
-import { useMemoizedFn } from 'ahooks'
+import { useLocalStorageState, useMemoizedFn } from 'ahooks'
 import Dialog from './dialog/Dialog'
 import { useDialog } from './dialog/useDialog'
+import { dbg } from './utils/debug'
 
 const App = () => {
-  const [music, setMusic] = useState<IMusicScore>(_exampleMusic as IMusicScore)
-  const [newStaff, setNewStaff] = useState<IStaff>(
-    _exampleMusic.staff as IStaff,
-  )
+  const [lastEditedMusic, setLastEditedMusic] =
+    useLocalStorageState<IMusicScore>('lastEditedMusic', {
+      defaultValue: _exampleMusic as IMusicScore,
+    })
+
+  const [music, setMusic] = useState<IMusicScore>(lastEditedMusic!)
+  const [newStaff, setNewStaff] = useState<IStaff>(lastEditedMusic!.staff)
+
+  useEffect(() => {
+    setLastEditedMusic(dbg(music, 'Music Change'))
+  }, [music])
 
   const { isOpen, open: openDialog, close: closeDialog, message } = useDialog()
   const [dialogPendingOn, setDialogPendingOn] = useState<

@@ -5,6 +5,7 @@
 ### Features
 
 + Slurs (curved lines above notes) (single layer only)
++ Automatically restore last edited music when refreshed.
 
 ### Fixes
 
