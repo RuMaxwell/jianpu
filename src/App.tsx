@@ -163,20 +163,22 @@ const App = () => {
 
   const shiftPitch = useMemoizedFn(
     (halfNotes: 1 | -1, mode: 'auto' | 'sharp' | 'flat') => {
+      const staff = {
+        notes: music.staff.notes.map((note) => {
+          if (note.type) {
+            return note
+          }
+          return {
+            ...note,
+            pitch: Note.shiftPitch(note.pitch, halfNotes, mode),
+          }
+        }),
+      }
       setMusic({
         ...music,
-        staff: {
-          notes: music.staff.notes.map((note) => {
-            if (note.type) {
-              return note
-            }
-            return {
-              ...note,
-              pitch: Note.shiftPitch(note.pitch, halfNotes, mode),
-            }
-          }),
-        },
+        staff,
       })
+      setNewStaff(staff)
     },
   )
 
