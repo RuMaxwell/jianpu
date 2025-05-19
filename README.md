@@ -176,6 +176,12 @@ If you press <kbd>|</kbd> next to a bar line, it will change to a final bar line
 
 If you press <kbd>|</kbd> next to a `:` text note, it will change to a repeat bar line, and press <kbd>|</kbd> again will change it to a final repeat bar line.
 
-#### Delete a note, or a thing
+#### Add slurs to the notes
+
+Slurs can be added by typing `[` before the start note and `]` after the end note. When there is a pair of these symbols, a curve will be drawn from the above of the note after the `[` to the above of the note before the `]`. When the cursor is next to a `[` or right before a `]` symbol, it is placed next to the start or before the end of the curve to distinguish with the position before the `[` and next to the `]` symbol.
+
+If there is an unpaired `[` symbol, a curve will be drawn from the note next to it to beyond the end of the staff without ending.
+
+#### Delete a note or any thing
 
 Put the cursor next to the thing you want to delete, and press <kbd>Backspace</kbd>.

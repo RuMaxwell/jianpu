@@ -12,7 +12,6 @@ import { jianpuJsonObjectToMarkdown } from './jianpu-markdown/jsonToMarkdown'
 import { useLocalStorageState, useMemoizedFn } from 'ahooks'
 import Dialog from './dialog/Dialog'
 import { useDialog } from './dialog/useDialog'
-import { dbg } from './utils/debug'
 
 const App = () => {
   const [lastEditedMusic, setLastEditedMusic] =
@@ -24,7 +23,7 @@ const App = () => {
   const [newStaff, setNewStaff] = useState<IStaff>(lastEditedMusic!.staff)
 
   useEffect(() => {
-    setLastEditedMusic(dbg(music, 'Music Change'))
+    setLastEditedMusic(music)
   }, [music])
 
   const { isOpen, open: openDialog, close: closeDialog, message } = useDialog()

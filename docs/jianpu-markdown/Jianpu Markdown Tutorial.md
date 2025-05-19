@@ -125,8 +125,8 @@ Whitespaces are insignificant between the components.
 
 ### StaffNotes syntax for `staff.notes` property
 
-Writing staff notes is the same as entering the notes from the editor. So you can use `1`-`7` to input pitches, `#`, `b`, and `n` to attach accidentals, `l` and `h` to shift octaves, `0` to input rests, `/` to halve the note before, `.` and `-` to lengthen the note, `:` and `|` to set bar lines, etc.
+Writing staff notes is the same as entering the notes from the editor. So you can use `1`-`7` to input pitches, `#`, `b`, and `n` to attach accidentals, `l` and `h` to shift octaves, `0` to input rests, `/` to halve the note before, `.` and `-` to lengthen the note, `:` and `|` to set bar lines, `[` and `]` to set the start and end of a slur curve, etc.
 
-All whitespaces are insignificant, including the line breaks because all value lines are joined together.
+All whitespaces are insignificant including line breaks as lines are joined together before processing.
 
-The examples often write the notes in a clear pattern that aligns the bar lines in columns (only when in a monospaced font). You don't have to do this, but if you want to gain the benefit that the notes in Jianpu Markdown can also be easily readable, it worth some time to do this. (Or use a formatter, who knows?)
+The examples often write the notes in a clear pattern that aligns the bar lines in columns (only when in a monospaced font). You don't have to do this, but if you want to gain the benefit that the notes in Jianpu Markdown can also be easily readable, it worth some time to do this. (Or one day, use a formatter.)

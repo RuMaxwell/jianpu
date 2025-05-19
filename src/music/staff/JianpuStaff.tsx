@@ -86,7 +86,7 @@ export default function JianpuStaff({
               focused &&
                 index === cursor &&
                 notes[index - 1]?.type !== 'slurStart' &&
-                notes[index - 1]?.type !== 'slurEnd' && (
+                note.type !== 'slurEnd' && (
                   <div key='cursor' className='staff-editor-cursor'></div>
                 )
             }
@@ -95,14 +95,12 @@ export default function JianpuStaff({
               focused &&
                 index === cursor &&
                 (notes[index - 1]?.type === 'slurStart' ||
-                  notes[index - 1]?.type === 'slurEnd') && (
+                  note.type === 'slurEnd') && (
                   <div
                     key='slurStartCursor'
                     className={
                       'staff-editor-slur-delimiter-cursor ' +
-                      (notes[index - 1]?.type === 'slurEnd'
-                        ? 'slur-end-cursor '
-                        : '')
+                      (note.type === 'slurEnd' ? 'slur-end-cursor ' : '')
                     }
                   ></div>
                 )
@@ -121,8 +119,7 @@ export default function JianpuStaff({
         /* cursor after the last note */
         focused &&
           cursor === notes.length &&
-          notes[notes.length - 1]?.type !== 'slurStart' &&
-          notes[notes.length - 1]?.type !== 'slurEnd' && (
+          notes[notes.length - 1]?.type !== 'slurStart' && (
             <div className='staff-editor-cursor cursor-at-last'></div>
           )
       }
@@ -130,8 +127,7 @@ export default function JianpuStaff({
         /* cursor for the last zero-width note */
         focused &&
           cursor === notes.length &&
-          (notes[notes.length - 1]?.type === 'slurStart' ||
-            notes[notes.length - 1]?.type === 'slurEnd') && (
+          notes[notes.length - 1]?.type === 'slurStart' && (
             <div
               className={
                 'staff-editor-slur-delimiter-cursor cursor-at-last ' +
