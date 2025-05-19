@@ -1,4 +1,4 @@
-import type { INote, IPitchNote, IStaff } from './staff'
+import type { INote, IPitchNote, IRestNote, IStaff } from './staff'
 import { MUSIC_NOTE_TO_JIANPU_NOTE } from '../music'
 import { Accidental } from '../meta/types'
 import { MusicText } from '../MusicText'
@@ -193,7 +193,7 @@ function getMainNoteComponent(note: INote): JSX.Element | null {
   if ('type' in note) {
     switch (note.type) {
       case 'rest':
-        return <MusicText className='jianpu-rest'>0</MusicText>
+        return <JianpuRest note={note}></JianpuRest>
       case 'dot':
         return <div className='jianpu-dot'>.</div>
       case 'dash':
@@ -303,6 +303,15 @@ function NoteDecoration({
   return null
 }
 
+function JianpuRest({ note }: { note: IRestNote }) {
+  return (
+    <div className='jianpu-rest'>
+      <MusicText>0</MusicText>
+      <DenominatorLines denominator={note.denominator} baseTopEm={1.1} />
+    </div>
+  )
+}
+
 function JianpuPitch(props: { note: IPitchNote }) {
   const { accidental, note, octave } = props.note.pitch
   const { denominator } = props.note
@@ -340,19 +349,11 @@ function JianpuPitch(props: { note: IPitchNote }) {
             {MUSIC_NOTE_TO_JIANPU_NOTE[note]}
           </MusicText>
         </div>
-        {denominator > 4 &&
-          Array(Math.log2(denominator) - 2)
-            .fill(0)
-            .map((_, i) => (
-              <div
-                key={i}
-                className={
-                  'jianpu-pitch-note-pitch-halfline ' +
-                  (accidental ? 'has-accidental' : '')
-                }
-                style={{ top: em(2 + i * 0.2) }}
-              ></div>
-            ))}
+        <DenominatorLines
+          denominator={denominator}
+          accidental={accidental}
+          baseTopEm={2}
+        />
         {octave < 4 &&
           Array(4 - octave)
             .fill(0)
@@ -369,5 +370,31 @@ function JianpuPitch(props: { note: IPitchNote }) {
             ))}
       </div>
     </div>
+  )
+}
+
+function DenominatorLines({
+  denominator,
+  accidental,
+  baseTopEm,
+}: {
+  denominator: number
+  accidental?: Accidental
+  baseTopEm: number
+}) {
+  return (
+    denominator > 4 &&
+    Array(Math.log2(denominator) - 2)
+      .fill(0)
+      .map((_, i) => (
+        <div
+          key={i}
+          className={
+            'jianpu-pitch-note-pitch-halfline ' +
+            (accidental ? 'has-accidental ' : '')
+          }
+          style={{ top: em(baseTopEm + i * 0.2) }}
+        ></div>
+      ))
   )
 }
