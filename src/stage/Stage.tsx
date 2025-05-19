@@ -13,6 +13,8 @@ export default function Stage(props: {
   composerHtml?: string
   newStaff?: IStaff
   onTitleChange?: (value: string) => void
+  onKeySignatureChange?: (value?: IKeySignature) => void
+  onTimeSignatureChange?: (value?: ITimeSignature) => void
   onComposerChange?: (value: string) => void
   onNotesChange?: (value: INote[]) => void
 }) {
@@ -23,6 +25,8 @@ export default function Stage(props: {
     composerHtml,
     newStaff,
     onTitleChange,
+    onKeySignatureChange,
+    onTimeSignatureChange,
     onComposerChange,
     onNotesChange,
   } = props
@@ -37,6 +41,8 @@ export default function Stage(props: {
         keySignature={keySignature}
         timeSignature={timeSignature}
         composerHtml={composerHtml}
+        onKeySignatureChange={onKeySignatureChange}
+        onTimeSignatureChange={onTimeSignatureChange}
         onComposerChange={onComposerChange}
       />
       <JianpuStaff newStaff={newStaff} onNotesChange={onNotesChange} />

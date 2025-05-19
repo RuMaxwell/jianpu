@@ -201,10 +201,12 @@ export class JianpuMarkdownParser {
     const value = property.value
     switch (property.key) {
       case 'key':
-        this.state.score.meta.key = this.parsePitch(value)
+        this.state.score.meta.key =
+          JianpuMarkdownParser.parseKeySignature(value)
         break
       case 'tempo':
-        this.state.score.meta.tempo = this.parseTempo(value)
+        this.state.score.meta.tempo =
+          JianpuMarkdownParser.parseTimeSignature(value)
         break
       case 'composer':
         this.state.score.meta.composer = value
@@ -221,7 +223,7 @@ export class JianpuMarkdownParser {
       this.state.context = 'meta'
       return 0
     }
-    this.state.score.meta.key = this.parsePitch(line)
+    this.state.score.meta.key = JianpuMarkdownParser.parseKeySignature(line)
     return 1
   }
 
@@ -231,7 +233,7 @@ export class JianpuMarkdownParser {
       this.state.context = 'meta'
       return 0
     }
-    this.state.score.meta.tempo = this.parseTempo(line)
+    this.state.score.meta.tempo = JianpuMarkdownParser.parseTimeSignature(line)
     return 1
   }
 
@@ -282,7 +284,7 @@ export class JianpuMarkdownParser {
     return 1
   }
 
-  private parsePitch(pitch: string): IPitch | undefined {
+  public static parseKeySignature(pitch: string): IPitch | undefined {
     const pitchRegex = /([A-Ga-g])\s*([#bn]?)\s*(\d*)/
     const m = pitch.match(pitchRegex)
     if (!m) {
@@ -302,7 +304,7 @@ export class JianpuMarkdownParser {
     return { note, accidental, octave }
   }
 
-  private parseTempo(tempo: string): ITimeSignature | undefined {
+  public static parseTimeSignature(tempo: string): ITimeSignature | undefined {
     if (!tempo) {
       return undefined
     }

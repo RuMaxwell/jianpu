@@ -2,5 +2,47 @@
   display: flex;
   justify-content: space-between;
   margin: 0 12px;
+  margin-bottom: 1em;
   font-size: 1.2rem;
+}
+
+.music-meta-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.key-signature {
+  height: 30px;
+}
+
+.key-signature-reference-pitch {
+  position: relative;
+  margin-right: 0.3em;
+}
+
+.key-signature-reference-pitch-octave {
+  position: absolute;
+  left: -0.25em;
+}
+
+.time-signature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.key-signature-input,
+.time-signature-input {
+  font-size: inherit;
+  background-color: transparent;
+  width: 3em;
+  border: none;
+}
+
+.time-signature-division-line {
+  width: 1.2em;
+  height: 1px;
+  min-height: 1px;
+  background-color: var(--fg-color);
 }

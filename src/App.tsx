@@ -1,3 +1,4 @@
+import type { IKeySignature, ITimeSignature } from './music/meta/types'
 import { useEffect, useState } from 'react'
 import './App.css'
 import { Note, type IMusicScore } from './music/music'
@@ -125,6 +126,26 @@ const App = () => {
     replaceWithDefaultTitle()
   })
 
+  const handleAddKeySignature = useMemoizedFn(() => {
+    setMusic({
+      ...music,
+      meta: {
+        ...music.meta,
+        key: { note: Note.C },
+      },
+    })
+  })
+
+  const handleAddTimeSignature = useMemoizedFn(() => {
+    setMusic({
+      ...music,
+      meta: {
+        ...music.meta,
+        tempo: { numerator: 4, denominator: 4 },
+      },
+    })
+  })
+
   const replaceWithDefaultTitle = useMemoizedFn(() => {
     setMusic({
       ...music,
@@ -155,6 +176,26 @@ const App = () => {
     setMusic({
       ...music,
       title: value,
+    })
+  })
+
+  const handleKeySignatureChange = useMemoizedFn((value?: IKeySignature) => {
+    setMusic({
+      ...music,
+      meta: {
+        ...music.meta,
+        key: value,
+      },
+    })
+  })
+
+  const handleTimeSignatureChange = useMemoizedFn((value?: ITimeSignature) => {
+    setMusic({
+      ...music,
+      meta: {
+        ...music.meta,
+        tempo: value,
+      },
     })
   })
 
@@ -228,6 +269,8 @@ const App = () => {
         onFileImportError={handleFileImportError}
         onExportRequest={handleExportRequest}
         onAddTitle={handleAddTitle}
+        onAddKeySignature={handleAddKeySignature}
+        onAddTimeSignature={handleAddTimeSignature}
         onAddComposer={handleAddComposer}
         onPitchShiftHigher={onPitchShiftHigher}
         onPitchShiftLower={onPitchShiftLower}
@@ -240,6 +283,8 @@ const App = () => {
         composerHtml={music.meta.composer}
         newStaff={newStaff}
         onTitleChange={handleTitleChange}
+        onKeySignatureChange={handleKeySignatureChange}
+        onTimeSignatureChange={handleTimeSignatureChange}
         onComposerChange={handleComposerChange}
         onNotesChange={handleStaffNotesChange}
       />

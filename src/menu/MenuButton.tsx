@@ -11,6 +11,8 @@ interface IProps {
   isActive?: boolean
   onClick?: (active: boolean) => void
   onAddTitle?: () => void
+  onAddKeySignature?: () => void
+  onAddTimeSignature?: () => void
   onAddComposer?: () => void
   onPitchShiftHigher?: () => void
   onPitchShiftLower?: () => void
@@ -21,6 +23,8 @@ const MenuButton = forwardRef<HTMLDivElement, IProps>((props, ref) => {
     isActive,
     onClick,
     onAddTitle,
+    onAddKeySignature,
+    onAddTimeSignature,
     onAddComposer,
     onPitchShiftHigher,
     onPitchShiftLower,
@@ -82,6 +86,8 @@ const MenuButton = forwardRef<HTMLDivElement, IProps>((props, ref) => {
           onClick={handleMenuClick}
         />
         <Button text='+Title' onClick={onAddTitle} />
+        <Button text='+Key' onClick={onAddKeySignature} />
+        <Button text='+Tempo' onClick={onAddTimeSignature} />
         <Button text='+Composer' onClick={onAddComposer} />
         <Button text='+Pitch' onClick={onPitchShiftHigher} />
         <Button text='-Pitch' onClick={onPitchShiftLower} />

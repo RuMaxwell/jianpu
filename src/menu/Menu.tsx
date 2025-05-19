@@ -10,6 +10,8 @@ export default function Menu({
   onFileImportError,
   onExportRequest,
   onAddTitle,
+  onAddKeySignature,
+  onAddTimeSignature,
   onAddComposer,
   onPitchShiftHigher,
   onPitchShiftLower,
@@ -20,6 +22,8 @@ export default function Menu({
   onFileImportError?: (errorMessage: string) => void
   onExportRequest?: (format: 'markdown' | 'json') => void
   onAddTitle?: () => void
+  onAddKeySignature?: () => void
+  onAddTimeSignature?: () => void
   onAddComposer?: () => void
   onPitchShiftHigher?: () => void
   onPitchShiftLower?: () => void
@@ -100,6 +104,8 @@ export default function Menu({
         isActive={menuIsOpen}
         onClick={handleMenuButtonClick}
         onAddTitle={onAddTitle}
+        onAddKeySignature={onAddKeySignature}
+        onAddTimeSignature={onAddTimeSignature}
         onAddComposer={onAddComposer}
         onPitchShiftHigher={onPitchShiftHigher}
         onPitchShiftLower={onPitchShiftLower}

@@ -1,5 +1,19 @@
 # Change log
 
+## Version 0.0.6-alpha
+
+### Features
+
++ Add and edit music key and tempo.
+
+### Changes
+
+* Display key and tempo horizontally, and tempo's numerator and denominator in vertical fraction format.
+
+### Fixes
+
+- Fix a bug where the rest notes do not display the half duration lines.
+
 ## Version 0.0.5-alpha
 
 ### Features

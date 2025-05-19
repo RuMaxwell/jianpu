@@ -1,4 +1,9 @@
-import { Accidental, ACCIDENTAL_TO_ASCII } from '../music/meta/types'
+import {
+  Accidental,
+  ACCIDENTAL_TO_ASCII,
+  type ITimeSignature,
+  type IKeySignature,
+} from '../music/meta/types'
 import { MUSIC_NOTE_TO_JIANPU_NOTE, type IMusicScore } from '../music/music'
 import { BUG_REPORT_MESSAGE } from './errors'
 
@@ -14,14 +19,10 @@ export function jianpuJsonObjectToMarkdown(jsonObject: IMusicScore): string {
     lines.push(`# Meta`)
 
     if (meta.key) {
-      const key = meta.key
-      lines.push(
-        `- key: ${key.note}${accidental(key.accidental)}${key.octave ?? ''}`,
-      )
+      lines.push(`- key: ${jianpuKeySignatureToMarkdown(meta.key)}`)
     }
     if (meta.tempo) {
-      const tempo = meta.tempo
-      lines.push(`- tempo: ${tempo.numerator}/${tempo.denominator}`)
+      lines.push(`- tempo: ${jianpuTimeSignatureToMarkdown(meta.tempo)}`)
     }
     if (meta.composer) {
       lines.push(`- composer: ${meta.composer}`)
@@ -76,6 +77,14 @@ export function jianpuJsonObjectToMarkdown(jsonObject: IMusicScore): string {
   }
 
   return lines.join('\n')
+}
+
+export function jianpuKeySignatureToMarkdown(key: IKeySignature): string {
+  return `${key.note}${accidental(key.accidental)}${key.octave ?? ''}`
+}
+
+export function jianpuTimeSignatureToMarkdown(time: ITimeSignature): string {
+  return `${time.numerator}/${time.denominator}`
 }
 
 function accidental(value?: Accidental): string {
